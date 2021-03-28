@@ -58,7 +58,6 @@ public class UserGetDTO {
         return creationdate;
     }
 
-
     public String getBirthday() {
         return birthday;
     }
