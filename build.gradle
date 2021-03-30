@@ -89,9 +89,9 @@ if (secretPropsFile.exists()) {
 
 sonarqube {
     properties {
-        //property "sonar.projectKey", "sopra-fs21-group-12_serverGroup12"
-        //property "sonar.organization", "sopra-fs21-group-12"
-        //property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.projectKey", "sopra-fs21-group-12_serverGroup12"
+        property "sonar.organization", "sopra-fs21-group-12"
+        property "sonar.host.url", "https://sonarcloud.io"
 
         property "sonar.projectKey", project.sonarProjectKey
         property "sonar.organization", project.sonarOrganization
