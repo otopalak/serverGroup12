@@ -1,6 +1,8 @@
 package ch.uzh.ifi.hase.soprafs21.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs21.entity.Pictures;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.PictureGetDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPutDTO;
@@ -36,5 +38,9 @@ public interface DTOMapper {
     @Mapping(source = "id",target = "id")
     @Mapping(source = "birthday",target = "birthday")
     User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
+
+    @Mapping(source = "name",target = "name")
+    @Mapping(source = "type",target = "type")
+    PictureGetDTO convertEntityToPictureGetDTO(Pictures picture);
 
 }
