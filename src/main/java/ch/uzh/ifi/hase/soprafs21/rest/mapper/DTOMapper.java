@@ -1,11 +1,10 @@
 package ch.uzh.ifi.hase.soprafs21.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs21.entity.Item;
+import ch.uzh.ifi.hase.soprafs21.entity.Matches;
 import ch.uzh.ifi.hase.soprafs21.entity.Pictures;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.PictureGetDTO;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.UserGetDTO;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPutDTO;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.*;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -27,6 +26,12 @@ public interface DTOMapper {
     @Mapping(source = "password", target = "password")
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
+    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "description", target = "description")
+    @Mapping(source = "title", target = "title")
+    Item convertItemPostDTOtoEntity(ItemPostDTO itemPostDTO);
+
+
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
@@ -34,6 +39,11 @@ public interface DTOMapper {
     @Mapping(source = "birthday",target = "birthday")
     @Mapping(source = "token",target = "token")
     UserGetDTO convertEntityToUserGetDTO(User user);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "itemIdOne", target = "itemIdOne")
+    @Mapping(source = "itemIdTwo", target = "itemIdTwo")
+    MatchesGetDTO convertEntityToMatchesGetDTO(Matches matches);
 
     @Mapping(source = "id",target = "id")
     @Mapping(source = "birthday",target = "birthday")

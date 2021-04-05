@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /*
  *  This is a picture Entity to save pictures in the Database
