@@ -1,35 +1,9 @@
-package ch.uzh.ifi.hase.soprafs21.entity;
+package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
-import javax.persistence.*;
-import java.io.Serializable;
-
-@Entity
-@Table(name = "LIKES") // "LIKE" funktioniert nicht aus irgendeinem Grund...
-public class Like implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue
-    private Long likeID;
-
-    @Column(nullable = false)
+public class LikePostDTO {
     private Long itemIDSwiper;
-
-    @Column(nullable = false)
     private Long itemIDSwiped;
-
-    @Column(nullable = false)
     private Boolean liked;
-
-
-    public Long getLikeID() {
-        return likeID;
-    }
-
-    public void setLikeID(Long likeID) {
-        this.likeID = likeID;
-    }
 
     public Long getItemIDSwiper() {
         return itemIDSwiper;

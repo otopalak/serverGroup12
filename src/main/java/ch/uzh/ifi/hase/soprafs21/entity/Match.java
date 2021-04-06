@@ -1,4 +1,4 @@
-package ch.uzh.ifi.hase.soprafs21.entity;
+/*package ch.uzh.ifi.hase.soprafs21.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -42,6 +42,6 @@ public class Match implements Serializable {
     public void setItemIDWhoisLiked(String itemIDWhoisLiked) {
         this.itemIDWhoisLiked = itemIDWhoisLiked;
     }
-}
+}*/
 
 
