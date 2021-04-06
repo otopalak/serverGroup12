@@ -3,11 +3,10 @@ package ch.uzh.ifi.hase.soprafs21.controller;
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Matches;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.ItemPostDTO;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.MatchesGetDTO;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.UserGetDTO;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs21.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,25 +17,59 @@ import java.util.List;
 
 @RestController
 public class ItemController {
-    private final ItemService itemService;
 
-    ItemController(ItemService itemService) {
-        this.itemService = itemService;
-    }
-    @PostMapping("/item")
+    // Creates an itemService instance
+    @Autowired
+    private  ItemService itemService;
+
+
+    // Post Mapping for creating an Item
+    @PostMapping("/users/{userID}/items")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public void createUser(@RequestBody ItemPostDTO itemPostDTO) {
-        // Checks if username & password given are not empty
-
+    public void createItem(@PathVariable("userID")long userId, @RequestBody ItemPostDTO itemPostDTO) {
+        itemPostDTO.setUserId(userId);
         // convert API user to internal representation
         Item newItem = DTOMapper.INSTANCE.convertItemPostDTOtoEntity(itemPostDTO);
-
-        // create user
-        Item createItem = itemService.createItem(newItem);
-
-        // convert internal representation of user back to API
+        // Saves the item in the Database
+        itemService.createItem(newItem);
     }
+
+    // Get Mapping to get all items in a list
+    @GetMapping("/items")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<ItemGetDTO> returnAllItems(){
+        // Getting all Item Entities from the database
+        List<Item> items = itemService.getAllItems();
+        List <ItemGetDTO> itemGetDTOS = new ArrayList<>();
+
+        // Internal representation to API representation
+        for(Item item: items){
+            itemGetDTOS.add(DTOMapper.INSTANCE.convertEntityToItemGetDTO(item));
+        }
+        return itemGetDTOS;
+    }
+
+    // Get Mapping to get an Item by ID
+    @GetMapping("/items/{itemId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public ItemGetDTO returnItemById(@PathVariable("itemId") long itemId){
+        Item item = this.itemService.getItemById(itemId);
+        ItemGetDTO itemGetDTO = DTOMapper.INSTANCE.convertEntityToItemGetDTO(item);
+        return itemGetDTO;
+    }
+
+    // Put Mapping for Updating an Item:
+    @PutMapping("/items/{itemId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateItem(@PathVariable("itemId") long itemId, @RequestBody ItemPutDTO itemPutDTO){
+        Item currentItem = this.itemService.getItemById(itemId);
+        Item inputItem = DTOMapper.INSTANCE.convertItemPutDTOtoEntity(itemPutDTO);
+        this.itemService.updateItem(currentItem,inputItem);
+    }
+
 
     // To remove only here for testing
     @GetMapping("/item/{idOne}/{idTwo}")

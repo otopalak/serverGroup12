@@ -1,9 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 /*
@@ -16,9 +13,17 @@ public class Item {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(nullable = false)
     private Long userId;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private String title;
+
+
     public Long getId() {
         return id;
     }

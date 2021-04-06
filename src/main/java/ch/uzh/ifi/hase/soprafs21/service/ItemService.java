@@ -5,7 +5,9 @@ import ch.uzh.ifi.hase.soprafs21.entity.Matches;
 import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,10 +25,38 @@ public class ItemService {
         this.matchRepository = matchRepository;
     }
 
-    public Item createItem(Item itemToCreate){
-        itemToCreate = itemRepository.save(itemToCreate);
+    // Saves the item in the database
+    public void createItem(Item itemToCreate){
+        itemRepository.save(itemToCreate);
         itemRepository.flush();
-        return itemToCreate;
+    }
+
+    // Get all items from the database
+    public List<Item> getAllItems(){
+        return this.itemRepository.findAll();
+    }
+
+    // Get Item by ID -> Throws error, if Item with this id not present
+    public Item getItemById(long id){
+        Item item = this.getItemById(id);
+        if(item == null){
+            String baseErrorMessage = "The item with this id does not exist";
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,String.format(baseErrorMessage));
+        }else{
+            return item;
+        }
+    }
+
+    //Update the item
+    public void updateItem(Item currentItem,Item userInput){
+        // Changes the Description of the item
+        if(userInput.getDescription()!=null){
+            currentItem.setDescription(userInput.getDescription());
+        }
+        // Changes the Title of the item
+        if(userInput.getTitle()!=null){
+            currentItem.setTitle(userInput.getTitle());
+        }
     }
 
     // here just temporarely to test the chat feature
