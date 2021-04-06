@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs21.entity.Like;
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Matches;
 import ch.uzh.ifi.hase.soprafs21.entity.Pictures;
@@ -61,5 +62,11 @@ public interface DTOMapper {
     @Mapping(source = "name",target = "name")
     @Mapping(source = "type",target = "type")
     PictureGetDTO convertEntityToPictureGetDTO(Pictures picture);
+
+    @Mapping(source = "itemIDSwiper", target = "itemIDSwiper")
+    @Mapping(source = "itemIDSwiped", target = "itemIDSwiped")
+    @Mapping(source = "liked", target = "liked")
+    Like convertLikePostDTOToEntity(LikePostDTO likePostDTO);
+
 
 }
