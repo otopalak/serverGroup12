@@ -1,9 +1,20 @@
 package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
+import java.util.List;
+
 public class ItemPostDTO {
     private Long userId;
     private String description;
     private String title;
+    private List<String> tagsItem;
+
+    public List<String> getTagsItem() {
+        return tagsItem;
+    }
+
+    public void setTagsItem(List<String> tagsItem) {
+        this.tagsItem = tagsItem;
+    }
 
     public Long getUserId() {
         return userId;

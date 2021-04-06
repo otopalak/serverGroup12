@@ -1,12 +1,24 @@
 package ch.uzh.ifi.hase.soprafs21.rest.dto;
+import ch.uzh.ifi.hase.soprafs21.entity.Tags;
+
+import java.util.List;
 
 public class ItemPutDTO {
         private Long id;
         private Long userId;
         private String description;
         private String title;
+        private List<String> tagsItem;
 
-        public Long getUserId() {
+    public List<String> getTagsItem() {
+        return tagsItem;
+    }
+
+    public void setTagsItem(List<String> tagsItem) {
+        this.tagsItem = tagsItem;
+    }
+
+    public Long getUserId() {
             return userId;
         }
 

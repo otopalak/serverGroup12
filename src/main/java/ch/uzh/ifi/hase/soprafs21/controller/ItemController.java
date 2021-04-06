@@ -2,9 +2,11 @@ package ch.uzh.ifi.hase.soprafs21.controller;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Matches;
+import ch.uzh.ifi.hase.soprafs21.entity.Tags;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
+import ch.uzh.ifi.hase.soprafs21.service.TagsService;
 import ch.uzh.ifi.hase.soprafs21.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,9 @@ public class ItemController {
     @Autowired
     private  ItemService itemService;
 
+    @Autowired
+    private TagsService tagsService;
+
 
     // Post Mapping for creating an Item
     @PostMapping("/users/{userID}/items")
@@ -29,8 +34,15 @@ public class ItemController {
     @ResponseBody
     public void createItem(@PathVariable("userID")long userId, @RequestBody ItemPostDTO itemPostDTO) {
         itemPostDTO.setUserId(userId);
+        // Given a String List of Tags, we add them to the item
+        List<String> tagsString = itemPostDTO.getTagsItem();
+        List<Tags> tagsTags = new ArrayList<>();
+        for(String tag:tagsString){
+            tagsTags.add(this.tagsService.getTagByDescription(tag));
+        }
         // convert API user to internal representation
         Item newItem = DTOMapper.INSTANCE.convertItemPostDTOtoEntity(itemPostDTO);
+        newItem.setItemtags(tagsTags);
         // Saves the item in the Database
         itemService.createItem(newItem);
     }
@@ -57,7 +69,15 @@ public class ItemController {
     @ResponseBody
     public ItemGetDTO returnItemById(@PathVariable("itemId") long itemId){
         Item item = this.itemService.getItemById(itemId);
+        // Getting all the tags from the item:
+        List<Tags> tags = item.getItemtags();
+        List<String> tagsString = new ArrayList<>();
         ItemGetDTO itemGetDTO = DTOMapper.INSTANCE.convertEntityToItemGetDTO(item);
+        for(Tags tag:tags){
+            System.out.println(tag.getDescription());
+            tagsString.add(tag.getDescription());
+        }
+        itemGetDTO.setTagsItem(tagsString);
         return itemGetDTO;
     }
 

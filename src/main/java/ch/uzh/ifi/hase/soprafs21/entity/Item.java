@@ -1,6 +1,8 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /*
@@ -22,6 +24,20 @@ public class Item {
 
     @Column(nullable = false)
     private String title;
+
+    // Tags for the item
+    @ManyToMany
+    private List<Tags> itemtags = new ArrayList<>();
+
+
+    public List<Tags> getItemtags() {
+        return itemtags;
+    }
+
+
+    public void setItemtags(List<Tags> itemtags) {
+        this.itemtags = itemtags;
+    }
 
 
     public Long getId() {

@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository("iemRepository")
 public interface ItemRepository extends JpaRepository<Item, Long> {
-    User findById(long id);
+    Item findById(long id);
 }
 

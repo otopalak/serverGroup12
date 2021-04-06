@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Matches;
+import ch.uzh.ifi.hase.soprafs21.entity.Tags;
 import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class ItemService {
 
     // Get Item by ID -> Throws error, if Item with this id not present
     public Item getItemById(long id){
-        Item item = this.getItemById(id);
+        Item item = this.itemRepository.findById(id);
         if(item == null){
             String baseErrorMessage = "The item with this id does not exist";
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,String.format(baseErrorMessage));
@@ -58,6 +59,7 @@ public class ItemService {
             currentItem.setTitle(userInput.getTitle());
         }
     }
+
 
     // here just temporarely to test the chat feature
     public void createMatch(Long idOne, Long idTwo){
