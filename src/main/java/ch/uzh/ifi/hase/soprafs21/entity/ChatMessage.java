@@ -15,7 +15,6 @@ public class ChatMessage {
     @Id
     @GeneratedValue
     private Long id;
-    private Long chatId;
     private Long senderId;
     private Long matchId;
     private Long recipientId;
@@ -49,13 +48,6 @@ public class ChatMessage {
         this.id = id;
     }
 
-    public Long getChatId() {
-        return chatId;
-    }
-
-    public void setChatId(Long chatId) {
-        this.chatId = chatId;
-    }
 
     public Long getSenderId() {
         return senderId;

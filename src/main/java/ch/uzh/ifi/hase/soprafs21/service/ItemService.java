@@ -38,7 +38,7 @@ public class ItemService {
 
     // Get Item by ID -> Throws error, if Item with this id not present
     public Item getItemById(long id){
-        Item item = this.getItemById(id);
+        Item item = this.itemRepository.findById(id);
         if(item == null){
             String baseErrorMessage = "The item with this id does not exist";
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,String.format(baseErrorMessage));
