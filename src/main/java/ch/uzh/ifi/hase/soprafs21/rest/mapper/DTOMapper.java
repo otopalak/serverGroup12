@@ -32,7 +32,6 @@ public interface DTOMapper {
     @Mapping(source = "title", target = "title")
     Item convertItemPostDTOtoEntity(ItemPostDTO itemPostDTO);
 
-
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
@@ -58,6 +57,4 @@ public interface DTOMapper {
     @Mapping(source = "itemIDSwiped", target = "itemIDSwiped")
     @Mapping(source = "liked", target = "liked")
     Like convertLikePostDTOToEntity(LikePostDTO likePostDTO);
-
-
 }
