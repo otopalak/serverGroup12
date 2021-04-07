@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.TransactionScoped;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -14,22 +13,18 @@ import java.util.List;
 @Transactional
 public class LikeService {
     private final LikeRepository likeRepository;
+    private final MatchService matchService;
 
     @Autowired
-    public LikeService(@Qualifier("likeRepository") LikeRepository likeRepository) {
+    public LikeService(@Qualifier("likeRepository") LikeRepository likeRepository, @Qualifier("matchService") MatchService matchService) {
         this.likeRepository = likeRepository;
+        this.matchService = matchService;
     }
     public List<Like> getAllLikes(){
         return this.likeRepository.findAll();
     }
 
-    public Like createLike(Like likeInput) {
-        /*
-        //check if like already exists by id
-        if(likeRepository.findByLikeID(likeInput.getLikeID()) != null) {
-            return likeRepository.findByLikeID(likeInput.getLikeID());
-        }*/
-
+    public void createLike(Like likeInput) {
         //check if like already exists by itemIDSwiper and itemIDSwiped
         Long itemIDSwiper = likeInput.getItemIDSwiper();
         Long itemIDSwiped = likeInput.getItemIDSwiped();
@@ -38,27 +33,29 @@ public class LikeService {
             //in normal case you can only overwrite from false to true, because true items would not be shown again to swipe.
             if(itemIDSwiper.equals(repoLike.getItemIDSwiper()) && itemIDSwiped.equals(repoLike.getItemIDSwiped())){
                 repoLike.setLiked(likeInput.getLiked());
-                return repoLike;
+                checkLikeForMatch(repoLike);
+                return;
             }
         }
-
         //add new Like to LikeRepository
-        likeInput = likeRepository.save(likeInput);
+        likeRepository.save(likeInput);
         likeRepository.flush();
 
-        //check for new match ???
-        //checkLikeForMatch(likeInput);
-
-        return likeInput;
+        //check for new match
+        checkLikeForMatch(likeInput);
 
     }
-    /*public void checkLikeForMatch(Like like){
+    public void checkLikeForMatch(Like like){
         if (like.getLiked()){
             long itemIDSwiper = like.getItemIDSwiper();
             long itemIDSwiped = like.getItemIDSwiped();
-            if (likeRepository.findByItemIDSwipedEqualsAndItemIdSwiperEquals(itemIDSwiper, itemIDSwiped).getLiked()) {
-                System.out.println("create Match");
+            Like likeOpponent = likeRepository.findByItemIDSwipedAndItemIDSwiper(itemIDSwiper, itemIDSwiped);
+            if (likeOpponent != null) {
+                if (likeOpponent.getLiked()){
+                    //create match
+                    matchService.createMatch(like.getItemIDSwiper(), like.getItemIDSwiped());
+                }
             }
         }
-    }*/
+    }
 }
