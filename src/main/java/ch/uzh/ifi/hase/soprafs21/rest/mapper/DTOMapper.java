@@ -32,6 +32,16 @@ public interface DTOMapper {
     @Mapping(source = "title", target = "title")
     Item convertItemPostDTOtoEntity(ItemPostDTO itemPostDTO);
 
+    @Mapping(source = "id",target = "id")
+    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "description", target = "description")
+    @Mapping(source = "title", target = "title")
+    ItemGetDTO convertEntityToItemGetDTO(Item item);
+
+    @Mapping(source = "description", target = "description")
+    @Mapping(source = "title", target = "title")
+    Item convertItemPutDTOtoEntity(ItemPutDTO itemPutDTO);
+
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
