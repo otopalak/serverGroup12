@@ -26,13 +26,13 @@ public class ChatMessageService {
                 senderId, recipientId, MessageStatus.RECEIVED);
     }
 
-    public List<ChatMessage> findChatMessages(Long senderId, Long recipientId) {
-        var chatId = chatRoomService.getChatId(senderId, recipientId, false);
+    public List<ChatMessage> findChatMessages(Long matchId) {
+        //var chatId = chatRoomService.getChatId(senderId, recipientId, false);
 
-        var messages = repository.findByChatId(chatId);
+        var messages = repository.findBymatchId(matchId);
 
         if(messages.size() > 0) {
-            updateStatuses(senderId, recipientId, MessageStatus.DELIVERED);
+            //updateStatuses(senderId, recipientId, MessageStatus.DELIVERED);
         }
 
         return messages;

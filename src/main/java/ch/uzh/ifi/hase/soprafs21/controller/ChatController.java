@@ -23,17 +23,13 @@ public class ChatController {
 
     @MessageMapping("/chat")
     public void processMessage(@Payload ChatMessage chatMessage) {
-        var chatId = chatRoomService
-                .getChatId(chatMessage.getSenderId(), chatMessage.getRecipientId(), true);
-        chatMessage.setChatId(chatId);
-        System.out.println(chatMessage.getContent());
         ChatMessage saved = chatMessageService.save(chatMessage);
         messagingTemplate.convertAndSendToUser(
                String.valueOf(chatMessage.getRecipientId()),"/queue/messages",
                 new ChatNotification(
                         saved.getId(),
                         saved.getSenderId(),
-                        saved.getSenderName()));
+                        ""));
     }
 
     @GetMapping("/messages/{senderId}/{recipientId}/count")
@@ -45,14 +41,13 @@ public class ChatController {
                 .ok(chatMessageService.countNewMessages(senderId, recipientId));
     }
 
-    @GetMapping("/messages/{senderId}/{recipientId}")
-    public ResponseEntity<?> findChatMessages ( @PathVariable Long senderId,
-                                                @PathVariable Long recipientId) {
+    @GetMapping("/messages/{matchId}")
+    public ResponseEntity<?> findChatMessages ( @PathVariable Long matchId){
         return ResponseEntity
-                .ok(chatMessageService.findChatMessages(senderId, recipientId));
+                .ok(chatMessageService.findChatMessages(matchId));
     }
 
-    @GetMapping("/messages/{id}")
+    @GetMapping("/message/{id}")
     public ResponseEntity<?> findMessage ( @PathVariable Long id) throws NotFoundException {
         return ResponseEntity
                 .ok(chatMessageService.findById(id));

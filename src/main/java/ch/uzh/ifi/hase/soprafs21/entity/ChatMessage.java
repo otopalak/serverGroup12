@@ -17,12 +17,21 @@ public class ChatMessage {
     private Long id;
     private Long chatId;
     private Long senderId;
+    private Long matchId;
     private Long recipientId;
     private String senderName;
     private String recipientName;
     private String content;
     private Date timestamp;
     private MessageStatus status;
+
+    public Long getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(Long matchId) {
+        this.matchId = matchId;
+    }
 
     public MessageStatus getStatus() {
         return status;

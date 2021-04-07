@@ -12,5 +12,5 @@ import java.util.logging.LogManager;
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
     long countBySenderIdAndRecipientIdAndStatus(
             Long senderId, Long recipientId, MessageStatus status);
-    List<ChatMessage> findByChatId(Long chatId);
+    List<ChatMessage> findBymatchId(Long matchId);
 }
