@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service ("matchService")
 public class MatchService {
@@ -41,12 +43,10 @@ public class MatchService {
     }
 
     public List<Matches> getAllMatchesByItemID(long itemId){
-        List<Matches> matchesByIdOne = matchRepository.findByItemIdOne(itemId);
-        List<Matches> matchesByIdTwo = matchRepository.findByItemIdTwo(itemId);
-        List<Matches> allMatchesById = new ArrayList<>();
-        allMatchesById.addAll(matchesByIdOne);
-        allMatchesById.addAll(matchesByIdTwo);
-        return allMatchesById;
+        List<Matches> fromIdOne = matchRepository.findByItemIdOne(itemId);
+        List<Matches> fromIdTwo = matchRepository.findByItemIdTwo(itemId);
+        return Stream.concat(fromIdOne.stream(), fromIdTwo.stream())
+                .collect(Collectors.toList());
     }
 
     public List<Matches> getAllMatchesByItem(Item item){
