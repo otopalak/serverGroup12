@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository("likeRepository")
 public interface LikeRepository extends JpaRepository<Like, Long> {
     //returns like ID of opponent's like
-    //Like findByItemIDSwipedEqualsAndItemIdSwiperEquals(long itemIDSwiper, long itemIDSwiped);
-
+    Like findByItemIDSwipedAndItemIDSwiper(Long itemIDSwiped, Long itemIDSwiper);
     Like findByLikeID(long likeID);
 
 }
