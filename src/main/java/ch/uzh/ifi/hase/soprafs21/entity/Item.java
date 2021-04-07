@@ -25,6 +25,7 @@ public class Item {
     @Column(nullable = false)
     private String title;
 
+
     // Tags for the item
     @ManyToMany
     private List<Tags> itemtags = new ArrayList<>();

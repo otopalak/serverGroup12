@@ -55,10 +55,17 @@ public class ItemController {
         // Getting all Item Entities from the database
         List<Item> items = itemService.getAllItems();
         List <ItemGetDTO> itemGetDTOS = new ArrayList<>();
-
         // Internal representation to API representation
         for(Item item: items){
-            itemGetDTOS.add(DTOMapper.INSTANCE.convertEntityToItemGetDTO(item));
+            // Adding the tags to the itemGetDTO's
+            List<String> tags = new ArrayList<>();
+            List<Tags> tagsTags = item.getItemtags();
+            ItemGetDTO itemGetDTO = DTOMapper.INSTANCE.convertEntityToItemGetDTO(item);
+            for(Tags tag: tagsTags){
+                tags.add(tag.getDescription());
+            }
+            itemGetDTO.setTagsItem(tags);
+            itemGetDTOS.add(itemGetDTO);
         }
         return itemGetDTOS;
     }
@@ -74,7 +81,6 @@ public class ItemController {
         List<String> tagsString = new ArrayList<>();
         ItemGetDTO itemGetDTO = DTOMapper.INSTANCE.convertEntityToItemGetDTO(item);
         for(Tags tag:tags){
-            System.out.println(tag.getDescription());
             tagsString.add(tag.getDescription());
         }
         itemGetDTO.setTagsItem(tagsString);
