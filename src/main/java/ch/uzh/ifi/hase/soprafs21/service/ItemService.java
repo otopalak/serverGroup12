@@ -38,7 +38,7 @@ public class ItemService {
 
     // Get Item by ID -> Throws error, if Item with this id not present
     public Item getItemById(long id){
-        Item item = this.getItemById(id);
+        Item item = this.itemRepository.findById(id);
         if(item == null){
             String baseErrorMessage = "The item with this id does not exist";
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,String.format(baseErrorMessage));
@@ -65,13 +65,5 @@ public class ItemService {
         newMatch.setItemIdOne(idOne);
         newMatch.setItemIdTwo(idTwo);
         matchRepository.save(newMatch);
-    }
-
-    // also to move...
-    public List<Matches> findMatchesForId(Long id){
-        List<Matches> fromIdOne = matchRepository.findByItemIdOne(id);
-        List<Matches> fromIdTwo = matchRepository.findByItemIdTwo(id);
-        return Stream.concat(fromIdOne.stream(), fromIdTwo.stream())
-                .collect(Collectors.toList());
     }
 }
