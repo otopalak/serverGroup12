@@ -3,7 +3,6 @@ package ch.uzh.ifi.hase.soprafs21.controller;
 import ch.uzh.ifi.hase.soprafs21.entity.ChatMessage;
 import ch.uzh.ifi.hase.soprafs21.constant.ChatNotification;
 import ch.uzh.ifi.hase.soprafs21.service.ChatMessageService;
-import ch.uzh.ifi.hase.soprafs21.service.ChatRoomService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +18,9 @@ public class ChatController {
 
     @Autowired private SimpMessagingTemplate messagingTemplate;
     @Autowired private ChatMessageService chatMessageService;
-    @Autowired private ChatRoomService chatRoomService;
 
     @MessageMapping("/chat")
     public void processMessage(@Payload ChatMessage chatMessage) {
-        var chatId = chatRoomService
-                .getChatId(chatMessage.getSenderId(), chatMessage.getRecipientId(), true);
-        chatMessage.setChatId(chatId);
-        System.out.println(chatMessage.getContent());
         ChatMessage saved = chatMessageService.save(chatMessage);
         messagingTemplate.convertAndSendToUser(
                String.valueOf(chatMessage.getRecipientId()),"/queue/messages",
@@ -36,23 +30,19 @@ public class ChatController {
                         saved.getSenderName()));
     }
 
-    @GetMapping("/messages/{senderId}/{recipientId}/count")
-    public ResponseEntity<Long> countNewMessages(
-            @PathVariable Long senderId,
-            @PathVariable Long recipientId) {
-
+    @GetMapping("/messages/{matchId}/count")
+    public ResponseEntity<Long> countNewMessages(@PathVariable Long matchId) {
         return ResponseEntity
-                .ok(chatMessageService.countNewMessages(senderId, recipientId));
+                .ok(chatMessageService.countNewMessages(matchId));
     }
 
-    @GetMapping("/messages/{senderId}/{recipientId}")
-    public ResponseEntity<?> findChatMessages ( @PathVariable Long senderId,
-                                                @PathVariable Long recipientId) {
+    @GetMapping("/messages/{matchId}")
+    public ResponseEntity<?> findChatMessages ( @PathVariable Long matchId){
         return ResponseEntity
-                .ok(chatMessageService.findChatMessages(senderId, recipientId));
+                .ok(chatMessageService.findChatMessages(matchId));
     }
 
-    @GetMapping("/messages/{id}")
+    @GetMapping("/message/{id}")
     public ResponseEntity<?> findMessage ( @PathVariable Long id) throws NotFoundException {
         return ResponseEntity
                 .ok(chatMessageService.findById(id));

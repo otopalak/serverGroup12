@@ -30,7 +30,7 @@ public class LikeController {
         Like likeInput = DTOMapper.INSTANCE.convertLikePostDTOToEntity(likePostDTO);
 
         // create Like
-        Like newLike = likeService.createLike(likeInput);
+        likeService.createLike(likeInput);
     }
 
 }

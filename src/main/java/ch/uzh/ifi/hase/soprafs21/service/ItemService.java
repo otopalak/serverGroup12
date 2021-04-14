@@ -68,12 +68,4 @@ public class ItemService {
         newMatch.setItemIdTwo(idTwo);
         matchRepository.save(newMatch);
     }
-
-    // also to move...
-    public List<Matches> findMatchesForId(Long id){
-        List<Matches> fromIdOne = matchRepository.findByItemIdOne(id);
-        List<Matches> fromIdTwo = matchRepository.findByItemIdTwo(id);
-        return Stream.concat(fromIdOne.stream(), fromIdTwo.stream())
-                .collect(Collectors.toList());
-    }
 }

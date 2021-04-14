@@ -64,12 +64,14 @@ public interface DTOMapper {
     @Mapping(source = "liked", target = "liked")
     Like convertLikePostDTOToEntity(LikePostDTO likePostDTO);
 
+
     @Mapping(source = "id",target = "id")
     @Mapping(source = "description",target = "description")
     TagGetDTO convertEntityToTagGetDTO(Tags tag);
 
     @Mapping(source = "description",target = "description")
     Tags convertTagPostDTOtoEntity(TagPostDTO tagPostDTO);
+
 
 
 }

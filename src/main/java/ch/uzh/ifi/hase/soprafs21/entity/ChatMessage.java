@@ -15,14 +15,22 @@ public class ChatMessage {
     @Id
     @GeneratedValue
     private Long id;
-    private Long chatId;
     private Long senderId;
+    private Long matchId;
     private Long recipientId;
     private String senderName;
     private String recipientName;
     private String content;
     private Date timestamp;
     private MessageStatus status;
+
+    public Long getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(Long matchId) {
+        this.matchId = matchId;
+    }
 
     public MessageStatus getStatus() {
         return status;
@@ -40,13 +48,6 @@ public class ChatMessage {
         this.id = id;
     }
 
-    public Long getChatId() {
-        return chatId;
-    }
-
-    public void setChatId(Long chatId) {
-        this.chatId = chatId;
-    }
 
     public Long getSenderId() {
         return senderId;

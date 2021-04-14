@@ -98,22 +98,10 @@ public class ItemController {
 
 
     // To remove only here for testing
+    // creates a match between idOne and idTwo
     @GetMapping("/item/{idOne}/{idTwo}")
     public void findChatMessages (@PathVariable Long idOne,
                                                @PathVariable Long idTwo) {
         itemService.createMatch(idOne, idTwo);
-    }
-
-    //pretty sure wrong endpoint --> change tomorrow
-    @GetMapping("/matches/{id}")
-    public List<MatchesGetDTO> findMatchesForId (@PathVariable Long id) {
-        List<Matches> myMatches = itemService.findMatchesForId(id);
-        List<MatchesGetDTO> matchesGetDTOS = new ArrayList<>();
-
-        // convert each user to the API representation
-        for (Matches match : myMatches) {
-            matchesGetDTOS.add(DTOMapper.INSTANCE.convertEntityToMatchesGetDTO(match));
-        }
-        return matchesGetDTOS;
     }
 }
