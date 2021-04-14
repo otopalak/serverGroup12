@@ -10,7 +10,7 @@ public class UserGetDTO {
     private String name;
     private String username;
     private UserStatus status;
-    private Timestamp creationdate;
+    private Timestamp timestamp;
     private String birthday;
     private String token;
 
@@ -54,8 +54,8 @@ public class UserGetDTO {
         this.status = status;
     }
 
-    public Timestamp getCreationdate() {
-        return creationdate;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
     public String getBirthday() {
@@ -66,7 +66,7 @@ public class UserGetDTO {
         this.birthday = birthday;
     }
 
-    public void setCreationdate(Timestamp creationdate) {
-        this.creationdate = creationdate;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 }
