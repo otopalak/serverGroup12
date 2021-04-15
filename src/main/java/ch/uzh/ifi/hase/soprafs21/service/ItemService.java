@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Matches;
+import ch.uzh.ifi.hase.soprafs21.entity.Tags;
 import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class ItemService {
             currentItem.setTitle(userInput.getTitle());
         }
     }
+
 
     // here just temporarely to test the chat feature
     public void createMatch(Long idOne, Long idTwo){

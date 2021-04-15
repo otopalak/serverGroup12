@@ -1,10 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.rest.mapper;
 
-import ch.uzh.ifi.hase.soprafs21.entity.Like;
-import ch.uzh.ifi.hase.soprafs21.entity.Item;
-import ch.uzh.ifi.hase.soprafs21.entity.Matches;
-import ch.uzh.ifi.hase.soprafs21.entity.Pictures;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
+import ch.uzh.ifi.hase.soprafs21.entity.*;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.*;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -27,9 +23,9 @@ public interface DTOMapper {
     @Mapping(source = "password", target = "password")
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
+    @Mapping(source = "title", target = "title")
     @Mapping(source = "userId", target = "userId")
     @Mapping(source = "description", target = "description")
-    @Mapping(source = "title", target = "title")
     Item convertItemPostDTOtoEntity(ItemPostDTO itemPostDTO);
 
     @Mapping(source = "id",target = "id")
@@ -67,4 +63,15 @@ public interface DTOMapper {
     @Mapping(source = "itemIDSwiped", target = "itemIDSwiped")
     @Mapping(source = "liked", target = "liked")
     Like convertLikePostDTOToEntity(LikePostDTO likePostDTO);
+
+
+    @Mapping(source = "id",target = "id")
+    @Mapping(source = "description",target = "description")
+    TagGetDTO convertEntityToTagGetDTO(Tags tag);
+
+    @Mapping(source = "description",target = "description")
+    Tags convertTagPostDTOtoEntity(TagPostDTO tagPostDTO);
+
+
+
 }
