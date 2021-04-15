@@ -31,6 +31,7 @@ public class PictureController {
 
     // This mapping is for uploading a File into our Database
     // Creates a Multipartfile and tries to save it into our Database and returns a respond message
+    // Small comment 
     @PostMapping("/upload/{itemId}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ResponseMessage> uploadFile( @RequestParam("file") MultipartFile file, @PathVariable("itemId") long itemId) {
