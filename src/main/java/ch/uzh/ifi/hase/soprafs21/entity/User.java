@@ -41,7 +41,7 @@ public class User implements Serializable {
     private String birthday;
 
     @CreationTimestamp
-    private Timestamp creationdate;
+    private Timestamp timestamp;
 
     @Column(nullable = false)
     private String password;
@@ -54,12 +54,12 @@ public class User implements Serializable {
         this.birthday = birthday;
     }
 
-    public Timestamp getCreationdate() {
-        return creationdate;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setCreationdate(Timestamp creationdate) {
-        this.creationdate = creationdate;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getPassword() {
