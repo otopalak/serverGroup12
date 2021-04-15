@@ -14,6 +14,7 @@ import org.hibernate.annotations.CreationTimestamp;
  * Every variable will be mapped into a database field with the @Column annotation
  * - nullable = false -> this cannot be left empty
  * - unique = true -> this value must be unqiue across the database -> composes the primary key
+ * Comment to check build
  */
 @Entity
 @Table(name = "USER")
