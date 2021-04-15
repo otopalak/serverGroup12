@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
-// import com.amr.chatservice.exception.ResourceNotFoundException;
 import ch.uzh.ifi.hase.soprafs21.constant.MessageStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.ChatMessage;
 import ch.uzh.ifi.hase.soprafs21.repository.ChatMessageRepository;
@@ -13,7 +12,6 @@ import java.util.List;
 @Service
 public class ChatMessageService {
     @Autowired private ChatMessageRepository repository;
-    @Autowired private ChatRoomService chatRoomService;
 
     public ChatMessage save(ChatMessage chatMessage) {
         chatMessage.setStatus(MessageStatus.RECEIVED);
@@ -21,18 +19,16 @@ public class ChatMessageService {
         return chatMessage;
     }
 
-    public long countNewMessages(Long senderId, Long recipientId) {
-        return repository.countBySenderIdAndRecipientIdAndStatus(
-                senderId, recipientId, MessageStatus.RECEIVED);
+    public long countNewMessages(Long matchId) {
+        return repository.countByMatchIdAndStatus( matchId,MessageStatus.RECEIVED);
     }
 
-    public List<ChatMessage> findChatMessages(Long senderId, Long recipientId) {
-        var chatId = chatRoomService.getChatId(senderId, recipientId, false);
+    public List<ChatMessage> findChatMessages(Long matchId) {
 
-        var messages = repository.findByChatId(chatId);
+        List<ChatMessage> messages = repository.findBymatchId(matchId);
 
         if(messages.size() > 0) {
-            updateStatuses(senderId, recipientId, MessageStatus.DELIVERED);
+            //updateStatuses(senderId, recipientId, MessageStatus.DELIVERED);
         }
 
         return messages;
