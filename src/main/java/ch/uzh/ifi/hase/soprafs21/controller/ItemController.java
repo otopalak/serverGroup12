@@ -10,6 +10,7 @@ import ch.uzh.ifi.hase.soprafs21.service.TagsService;
 import ch.uzh.ifi.hase.soprafs21.service.UserService;
 import com.amazonaws.services.s3.AmazonS3;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.print.attribute.standard.Media;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,25 +39,6 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    // Post pictures
-    @PostMapping(
-            path = "/items/{itemId}/image",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    @ResponseStatus(HttpStatus.OK)
-    public void uploadProfileImage(@PathVariable("itemId")long itemId,
-                                   @RequestParam("file") MultipartFile file) throws IOException {
-        System.out.println(itemId);
-        System.out.println(file);
-        itemService.uploadProfileImage(itemId, file);
-    }
-
-    @GetMapping("/items/{itemId}/image")
-    public byte[] downloadItemImage(@PathVariable("itemId")long itemId){
-        return itemService.download(itemId);
-
-    }
 
     // Post Mapping for creating an Item
     @PostMapping("/users/{userID}/items")

@@ -1,40 +1,13 @@
 package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
+import java.util.List;
+
 public class PictureGetDTO {
-    private String name;
-    private String url;
-    private String type;
-    private Long size;
+    private List<String> names;
+    private List<String> urls;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Long getSize() {
-        return size;
-    }
-
-    public void setSize(Long size) {
-        this.size = size;
+    public PictureGetDTO(List<String> names, List<String> urls) {
+        this.names = names;
+        this.urls = urls;
     }
 }
