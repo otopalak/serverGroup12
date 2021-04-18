@@ -1,3 +1,4 @@
+
 package ch.uzh.ifi.hase.soprafs21.configuration;
 
 import org.springframework.context.annotation.Bean;

@@ -25,6 +25,16 @@ public class Item {
     @Column(nullable = false)
     private String title;
 
+    @Column
+    private String name;
+
+    public String getPicture() {
+        return name;
+    }
+
+    public void setPicture(String name) {
+        this.name = name;
+    }
 
     // Tags for the item
     @ManyToMany
