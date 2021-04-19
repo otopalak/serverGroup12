@@ -1,11 +1,10 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
+import ch.uzh.ifi.hase.soprafs21.bucket.BucketName;
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectId;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +43,7 @@ public class FileStore {
         }
 
     }
+    // Downloads the file
     public byte[] download(String path,String key) {
         try {
             S3Object s3Object = s3.getObject(path, key);
@@ -55,5 +55,16 @@ public class FileStore {
             throw new IllegalStateException("Failed to download");
         }
     }
+    // Deletes the file from Amazon S3
+    public String delete(String path,String key){
+        try{
+            s3.deleteObject(path,key);
+        }catch (Exception e){
+            return "Cannot Delete File";
+        }
+        return "Delete Successfully";
+    }
+
+
 
 }

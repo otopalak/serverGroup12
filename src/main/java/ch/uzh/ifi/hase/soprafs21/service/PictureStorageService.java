@@ -2,37 +2,38 @@ package ch.uzh.ifi.hase.soprafs21.service;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Stream;
 
 import ch.uzh.ifi.hase.soprafs21.bucket.BucketName;
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Pictures;
 import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
+import ch.uzh.ifi.hase.soprafs21.repository.LikeRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.PictureDBRepository;
-import net.bytebuddy.implementation.auxiliary.AuxiliaryType;
 import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class PictureStorageService {
-
-    @Autowired
-    private PictureDBRepository pictureDBRepository;
-
-    @Autowired
-    private ItemRepository itemRepository;
 
     @Autowired
     private  FileStore fileStore;
 
+    private final PictureDBRepository pictureDBRepository;
+    private final ItemRepository itemRepository;
 
-
+    @Autowired
+    public PictureStorageService(@Qualifier("pictureDBRepository") PictureDBRepository pictureDBRepository, @Qualifier("itemRepository")ItemRepository itemRepository) {
+        this.pictureDBRepository = pictureDBRepository;
+        this.itemRepository = itemRepository;
+    }
 
     /*
      * Retrive all pictures
@@ -42,11 +43,19 @@ public class PictureStorageService {
         return pictures;
     }
 
-
-
-
-
-
+    // Delete Picture from AWS 3 and delete Picture Item
+    public String deleteImage(String pictureName){
+        String bucketname = BucketName.Item_Image.getBucketName();
+        Pictures picture = pictureDBRepository.findByName(pictureName);
+        String key = picture.getItemId() + "/" + pictureName;
+        String response = fileStore.delete(bucketname,key);
+        if(response=="Delete Successfully"){
+            pictureDBRepository.delete(picture);
+            return response;
+        }else {
+            return response;
+        }
+    }
 
     /*
      * This function is for uploading an image to the S3 Server and creating an Entity pictures
@@ -79,7 +88,8 @@ public class PictureStorageService {
         // 5. Create a new Picture Entity + Increase the counter by 1 of uploaded pictures
         UUID uuid = UUID.randomUUID();
         String URL = "https://mypicturegallerydshush.s3.eu-central-1.amazonaws.com/" + thisitem.getId().toString() + "/" + uuid.toString() + "-" + file.getOriginalFilename();
-        Pictures picture = new Pictures(thisitem.getId(),file.getOriginalFilename(),file.getContentType(),URL);
+        String name = uuid + "-" + file.getOriginalFilename();
+        Pictures picture = new Pictures(thisitem.getId(),name,file.getContentType(),URL);
         pictureDBRepository.save(picture);
         thisitem.setPicturecount(thisitem.getPicturecount()+1);
 

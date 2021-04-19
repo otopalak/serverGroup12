@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.controller;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Pictures;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.PictureGetDTO;
 import ch.uzh.ifi.hase.soprafs21.service.ItemService;
 import ch.uzh.ifi.hase.soprafs21.service.PictureStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class PictureController {
 
     // Post a picture
     @PostMapping(
-            path = "/items/{itemId}/upload",
+            path = "/items/{itemId}/pictures/upload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -37,7 +36,7 @@ public class PictureController {
     }
 
     // Retrieve all pictures
-    @GetMapping("/items/{itemId}/download")
+    @GetMapping("/items/{itemId}/pictures/download")
     @ResponseStatus(HttpStatus.OK)
     public List<String> downloadImage(@PathVariable("itemId")long itemId){
         List<Pictures> pictures = pictureStorageService.getAllPictures(itemId);
@@ -51,6 +50,15 @@ public class PictureController {
 
         }
         return names;
+    }
+
+    // Delete a File
+    @DeleteMapping("/pictures/delete/{pictureName}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String deletePicture(@PathVariable("pictureName")String pictureName){
+        String response = pictureStorageService.deleteImage(pictureName);
+        return response;
     }
 
 }
