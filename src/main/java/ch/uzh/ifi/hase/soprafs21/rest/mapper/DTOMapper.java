@@ -55,9 +55,6 @@ public interface DTOMapper {
     @Mapping(source = "birthday",target = "birthday")
     User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 
-    @Mapping(source = "name",target = "name")
-    @Mapping(source = "type",target = "type")
-    PictureGetDTO convertEntityToPictureGetDTO(Pictures picture);
 
     @Mapping(source = "itemIDSwiper", target = "itemIDSwiper")
     @Mapping(source = "itemIDSwiped", target = "itemIDSwiped")

@@ -13,35 +13,25 @@ public class Pictures {
     @Id
     @GeneratedValue
     private Long id;
+    @Column
     private Long itemId;
+    @Column
     private String name;
+    @Column
     private String type;
+    @Column
+    private String url;
 
-
-    // Needed to save Blob's => Storing binary data
-    @Lob
-    private byte[] data;
-
-    // Empty Constructor
-    public Pictures(){
+    public Pictures() {
+    super();
     }
 
-    // Non empty Constructor
-    public Pictures(String name, String type, byte[] data,Long itemId) {
+    // Constuctor to generate the picture
+    public Pictures(Long itemId, String name, String type, String url) {
+        this.itemId = itemId;
         this.name = name;
         this.type = type;
-        this.data = data;
-        this.itemId = itemId;
-    }
-    // Here we have all Getters and Setters:
-
-
-    public Long getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
+        this.url = url;
     }
 
     public Long getId() {
@@ -50,6 +40,14 @@ public class Pictures {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
     }
 
     public String getName() {
@@ -68,11 +66,11 @@ public class Pictures {
         this.type = type;
     }
 
-    public byte[] getData() {
-        return data;
+    public String getUrl() {
+        return url;
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

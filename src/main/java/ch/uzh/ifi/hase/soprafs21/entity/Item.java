@@ -25,11 +25,20 @@ public class Item {
     @Column(nullable = false)
     private String title;
 
+    @Column
+    private int picturecount = 0;
 
-    // Tags for the item
+
     @ManyToMany
     private List<Tags> itemtags = new ArrayList<>();
 
+    public int getPicturecount() {
+        return picturecount;
+    }
+
+    public void setPicturecount(int picturecount) {
+        this.picturecount = picturecount;
+    }
 
     public List<Tags> getItemtags() {
         return itemtags;
