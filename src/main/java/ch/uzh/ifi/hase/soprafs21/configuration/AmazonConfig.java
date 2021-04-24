@@ -14,17 +14,20 @@ import org.springframework.context.annotation.Configuration;
 public class AmazonConfig {
 
     // Passing our AWS Credentials to access it -> Gives us an instance of the amazon Client
-    @Value("AWS_ACCESS_KEY_ID")
-    private String ID;
 
-    @Value("AWS_SECRET_ACCESS_KEY")
-    private String SECRET;
 
     @Bean
     public AmazonS3 s3() {
-        AWSCredentials awsCredentials = new BasicAWSCredentials(ID,
-                SECRET);
 
+        AWSCredentials awsCredentials = null;
+
+        if (System.getenv("AWS_ACCESS_KEY_ID") == null ){
+             awsCredentials = new BasicAWSCredentials("default",
+                   "default");
+        }else {
+             awsCredentials = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"),
+                    System.getenv("AWS_SECRET_ACCESS_KEY"));
+        }
 
         return AmazonS3Client.builder().withRegion("eu-central-1").withCredentials(new AWSStaticCredentialsProvider(awsCredentials)).build();
     }
