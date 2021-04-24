@@ -15,8 +15,8 @@ public class AmazonConfig {
     // Passing our AWS Credentials to access it -> Gives us an instance of the amazon Client
     @Bean
     public AmazonS3 s3() {
-        AWSCredentials awsCredentials = new BasicAWSCredentials("${aws.access.key}",
-                "${aws.access.key}");
+        AWSCredentials awsCredentials = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"),
+                System.getenv("AWS_SECRET_ACCESS_KEY"));
 
         return AmazonS3Client.builder().withRegion("eu-central-1").withCredentials(new AWSStaticCredentialsProvider(awsCredentials)).build();
     }
