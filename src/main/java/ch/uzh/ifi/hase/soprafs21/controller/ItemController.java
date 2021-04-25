@@ -99,6 +99,13 @@ public class ItemController {
         return itemGetDTO;
     }
 
+    @GetMapping("/items/{itemId}/proposal")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<ItemGetDTO> itemProposal(@PathVariable("itemId") long itemId){
+        return  null;
+    }
+
     // Put Mapping for Updating an Item:
     @PutMapping("/items/{itemId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
