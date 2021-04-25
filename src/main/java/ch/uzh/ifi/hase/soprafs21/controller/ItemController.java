@@ -58,7 +58,26 @@ public class ItemController {
         // Saves the item in the Database
         itemService.createItem(newItem);
     }
-
+    @GetMapping("/users/{userID}/items")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<ItemGetDTO> returnAllItemsbyUserId(@PathVariable("userID")long userId){
+        List<Item> items = itemService.getAllItemsbyUserId(userId);
+        List <ItemGetDTO> itemGetDTOS1 = new ArrayList<>();
+        // Internal representation to API representation
+        for(Item item: items){
+            // Adding the tags to the itemGetDTO's
+            List<String> tags = new ArrayList<>();
+            List<Tags> tagsTags = item.getItemtags();
+            ItemGetDTO itemGetDTO = DTOMapper.INSTANCE.convertEntityToItemGetDTO(item);
+            for(Tags tag: tagsTags){
+                tags.add(tag.getDescription());
+            }
+            itemGetDTO.setTagsItem(tags);
+            itemGetDTOS1.add(itemGetDTO);
+        }
+        return itemGetDTOS1;
+    }
     // Get Mapping to get all items in a list
     @GetMapping("/items")
     @ResponseStatus(HttpStatus.OK)

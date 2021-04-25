@@ -1,36 +1,37 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
+import ch.uzh.ifi.hase.soprafs21.bucket.BucketName;
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Like;
 import ch.uzh.ifi.hase.soprafs21.entity.Matches;
+import ch.uzh.ifi.hase.soprafs21.entity.Tags;
 import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.LikeRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.MatchRepository;
+import com.amazonaws.AmazonServiceException;
+import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.*;
-
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ItemService {
 
     @Autowired
-    private final ItemRepository itemRepository;
-
+    private  ItemRepository itemRepository;
     @Autowired
-    private final MatchRepository matchRepository;
-
+    private  MatchRepository matchRepository;
     @Autowired
-    private final LikeRepository likeRepository;
+    private LikeRepository likeRepository;
 
-    public ItemService(ItemRepository itemRepository, MatchRepository matchRepository, LikeRepository likeRepository) {
-        this.itemRepository = itemRepository;
-        this.matchRepository = matchRepository;
-        this.likeRepository = likeRepository;
-    }
 
     // Saves the item in the database
     public void createItem(Item itemToCreate){
@@ -43,6 +44,16 @@ public class ItemService {
         return this.itemRepository.findAll();
     }
 
+    // Get Item by ID -> Throws error, if Item with this id not present
+    public Item getItemById(long id){
+        Item item = this.itemRepository.findById(id);
+        if(item == null){
+            String baseErrorMessage = "The item with this id does not exist";
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,String.format(baseErrorMessage));
+        }else{
+            return item;
+        }
+    }
     public List<Item> likeProposals(long myItemId) {
         List<Item> possibleItemsToLike = this.getAllItems();
         List<Item> itemProposal = new ArrayList<>();
@@ -58,16 +69,6 @@ public class ItemService {
         return  itemProposal;
     }
 
-    // Get Item by ID -> Throws error, if Item with this id not present
-    public Item getItemById(long id){
-        Item item = this.itemRepository.findById(id);
-        if(item == null){
-            String baseErrorMessage = "The item with this id does not exist";
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,String.format(baseErrorMessage));
-        }else{
-            return item;
-        }
-    }
     //Update the item
     public void updateItem(Item currentItem,Item userInput){
         // Changes the Description of the item
@@ -89,4 +90,7 @@ public class ItemService {
     }
 
 
+    public List<Item> getAllItemsbyUserId(long userId) {
+        return itemRepository.findItemsByUserId(userId);
+    }
 }
