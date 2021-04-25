@@ -103,7 +103,14 @@ public class ItemController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<ItemGetDTO> itemProposal(@PathVariable("itemId") long itemId){
-        return  null;
+        List<Item> proposal = this.itemService.likeProposals(itemId);
+        List <ItemGetDTO> itemGetDTOS = new ArrayList<>();
+        // Internal representation to API representation
+        for(Item item: proposal){
+            ItemGetDTO itemGetDTO = DTOMapper.INSTANCE.convertEntityToItemGetDTO(item);
+            itemGetDTOS.add(itemGetDTO);
+        }
+        return itemGetDTOS;
     }
 
     // Put Mapping for Updating an Item:
