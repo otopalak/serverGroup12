@@ -9,6 +9,7 @@ import ch.uzh.ifi.hase.soprafs21.repository.MatchRepository;
 import com.amazonaws.AmazonServiceException;
 import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,16 +24,10 @@ import java.util.stream.Stream;
 public class ItemService {
 
     @Autowired
-    private final ItemRepository itemRepository;
-
+    private  ItemRepository itemRepository;
     @Autowired
-    private final MatchRepository matchRepository;
+    private  MatchRepository matchRepository;
 
-
-    public ItemService(ItemRepository itemRepository, MatchRepository matchRepository) {
-        this.itemRepository = itemRepository;
-        this.matchRepository = matchRepository;
-    }
 
     // Saves the item in the database
     public void createItem(Item itemToCreate){
@@ -76,4 +71,7 @@ public class ItemService {
     }
 
 
+    public List<Item> getAllItemsbyUserId(long userId) {
+        return itemRepository.findItemsByUserId(userId);
+    }
 }

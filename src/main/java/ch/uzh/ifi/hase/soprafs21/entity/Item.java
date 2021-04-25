@@ -28,6 +28,8 @@ public class Item {
     @Column
     private int picturecount = 0;
 
+    public Item() {
+    }
 
     @ManyToMany
     private List<Tags> itemtags = new ArrayList<>();
