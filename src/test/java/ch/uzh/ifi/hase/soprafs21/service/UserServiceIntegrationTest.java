@@ -118,28 +118,7 @@ public class UserServiceIntegrationTest {
         assertEquals(testUser.getId(), found.getId());
     }
 
-    //tests the update of the currentUser with Inputs
-    @Test
-    public void updateCurrentUser_with_Inputs_success() {
-        User testUser = new User();
-        testUser.setName("testName");
-        testUser.setUsername("testUsername");
-        testUser.setPassword("v1234");
-        User createdUser = userService.createUser(testUser);
 
-        //User input for update
-        User testUser2 = new User();
-        testUser2.setUsername("NewUsername");
-        testUser2.setBirthday("23.03.1994");
-
-        // when
-        User updatedUser = userService.updateUser(createdUser, testUser2);
-
-        //then
-        assertEquals(updatedUser.getId(), createdUser.getId());
-        assertEquals(updatedUser.getUsername(), testUser2.getUsername());
-        assertEquals(updatedUser.getBirthday(), testUser2.getBirthday());
-    }
 
     //tests Login, if Login has valid Inputs
     @Test
