@@ -59,7 +59,7 @@ public class ItemService {
         List<Item> itemProposal = new ArrayList<>();
         for(Item item : possibleItemsToLike) {
             Like likedItem = likeRepository.findByItemIDSwipedAndItemIDSwiper(item.getId(), myItemId);
-            if(!(likedItem == null || likedItem.getLiked() == true || likedItem.getLiked() == false)){
+            if(likedItem == null){
                 itemProposal.add(item);
             }
             if(itemProposal.size() > 5) {
