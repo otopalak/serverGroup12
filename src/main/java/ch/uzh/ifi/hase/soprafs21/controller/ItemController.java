@@ -25,6 +25,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 public class ItemController {
@@ -118,6 +120,14 @@ public class ItemController {
         return itemGetDTO;
     }
 
+    @PostMapping("/items/{itemId}/report")
+    @ResponseStatus(HttpStatus.OK)
+    public String increaseReportCount(@PathVariable("itemId")long itemId){
+        String message = "";
+        message = itemService.updateReportCount(itemId);
+        return message;
+    }
+
     // Put Mapping for Updating an Item:
     @PutMapping("/items/{itemId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -127,6 +137,14 @@ public class ItemController {
         this.itemService.updateItem(currentItem,inputItem);
     }
 
+    // This mapping is for deleting an item
+    // When deleting an Item also all pictures will be deleted
+    @DeleteMapping("/items/{itemId}")
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteItem(@PathVariable("itemId") long id){
+        String delete = itemService.deleteItem(id);
+        return delete;
+    }
 
     // To remove only here for testing
     // creates a match between idOne and idTwo
@@ -134,6 +152,30 @@ public class ItemController {
     public void findChatMessages (@PathVariable Long idOne,
                                                @PathVariable Long idTwo) {
         itemService.createMatch(idOne, idTwo);
+    }
+    // Get all items by choosen Tags List
+    @GetMapping("users/{userId}/items/tags")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ItemGetDTO> getItemsByTags(@PathVariable("userId") long userId,@RequestBody TagsGetDTO tagsGetDTO){
+        List<Item> items = new ArrayList<>();
+        List<String> tags = tagsGetDTO.getTags();
+        items = itemService.getItemByTagName(tags,userId);
+        // Returning a list of ItemGetDTO's
+        List <ItemGetDTO> itemGetDTOS = new ArrayList<>();
+        // Internal representation to API representation
+        for(Item item: items){
+            // Adding the tags to the itemGetDTO's
+            List<String> tagsToConvert = new ArrayList<>();
+            List<Tags> tagsTags = item.getItemtags();
+            ItemGetDTO itemGetDTO = DTOMapper.INSTANCE.convertEntityToItemGetDTO(item);
+            for(Tags tagtoAdd: tagsTags){
+                tagsToConvert.add(tagtoAdd.getDescription());
+            }
+            itemGetDTO.setTagsItem(tagsToConvert);
+            itemGetDTOS.add(itemGetDTO);
+        }
+        return itemGetDTOS;
+
     }
 }
 

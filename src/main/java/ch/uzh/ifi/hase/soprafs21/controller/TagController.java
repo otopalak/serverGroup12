@@ -18,8 +18,9 @@ public class TagController {
     @Autowired
     private TagsService tagsService;
 
+
     // Mapping to create a Tag
-    @PostMapping("/Tag")
+    @PostMapping("/tag")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public TagGetDTO createTag(@RequestBody TagPostDTO tagPostDTO){
@@ -30,7 +31,7 @@ public class TagController {
     }
 
     // Mapping to get all Tags
-    @GetMapping("/Tags")
+    @GetMapping("/tags")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<TagGetDTO> getAllTags(){
