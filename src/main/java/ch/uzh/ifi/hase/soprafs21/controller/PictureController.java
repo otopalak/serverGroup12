@@ -1,6 +1,8 @@
 package ch.uzh.ifi.hase.soprafs21.controller;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Pictures;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.PictureGetDTO;
+import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs21.service.ItemService;
 import ch.uzh.ifi.hase.soprafs21.service.PictureStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,18 +40,14 @@ public class PictureController {
     // Retrieve all pictures
     @GetMapping("/items/{itemId}/pictures/download")
     @ResponseStatus(HttpStatus.OK)
-    public List<String> downloadImage(@PathVariable("itemId")long itemId){
+    public List<PictureGetDTO> downloadImage(@PathVariable("itemId")long itemId){
         List<Pictures> pictures = pictureStorageService.getAllPictures(itemId);
+        List<PictureGetDTO> pictureGetDTOS = new ArrayList<>();
 
-        List<String> names = new ArrayList<>();
         for (Pictures picture:pictures){
-            names.add(picture.getName());
-            System.out.println(picture.getName());
-            names.add(picture.getUrl());
-            System.out.println(picture.getUrl());
-
+            pictureGetDTOS.add(DTOMapper.INSTANCE.convertEntityToPictureGetDTO(picture));
         }
-        return names;
+        return pictureGetDTOS;
     }
 
     // Delete a File

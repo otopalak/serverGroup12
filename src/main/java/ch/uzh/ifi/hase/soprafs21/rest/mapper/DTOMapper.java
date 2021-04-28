@@ -69,6 +69,9 @@ public interface DTOMapper {
     @Mapping(source = "description",target = "description")
     Tags convertTagPostDTOtoEntity(TagPostDTO tagPostDTO);
 
+    @Mapping(source = "name",target = "name")
+    @Mapping(source = "url",target = "url")
+    PictureGetDTO convertEntityToPictureGetDTO(Pictures pictures);
 
 
 }
