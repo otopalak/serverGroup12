@@ -56,11 +56,11 @@ public class ItemService {
     //Update the item
     public void updateItem(Item currentItem, Item userInput) {
         // Changes the Description of the item
-        if (userInput.getDescription() != "") {
+        if (!userInput.getDescription().isBlank()) {
             currentItem.setDescription(userInput.getDescription());
         }
         // Changes the Title of the item
-        if (userInput.getTitle() != "") {
+        if (!userInput.getTitle().isBlank()) {
             currentItem.setTitle(userInput.getTitle());
         }
         itemRepository.save(currentItem);
