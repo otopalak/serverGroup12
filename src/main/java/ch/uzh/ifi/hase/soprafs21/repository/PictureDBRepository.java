@@ -13,5 +13,6 @@ public interface PictureDBRepository extends JpaRepository<Pictures, Long> {
     List<Pictures> findAllByItemId(long itemId);
     Pictures findById(long id);
     Pictures findByName(String filename);
+    void deleteAllByItemId(long id);
 
 }

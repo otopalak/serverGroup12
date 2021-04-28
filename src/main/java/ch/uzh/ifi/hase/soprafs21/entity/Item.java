@@ -26,6 +26,9 @@ public class Item {
     private String title;
 
     @Column
+    private int reportcount = 0;
+
+    @Column
     private int picturecount = 0;
 
     public Item() {
@@ -51,6 +54,13 @@ public class Item {
         this.itemtags = itemtags;
     }
 
+    public int getReportcount() {
+        return reportcount;
+    }
+
+    public void setReportcount(int reportcount) {
+        this.reportcount = reportcount;
+    }
 
     public Long getId() {
         return id;

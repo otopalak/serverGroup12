@@ -7,7 +7,6 @@ import ch.uzh.ifi.hase.soprafs21.bucket.BucketName;
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Pictures;
 import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
-import ch.uzh.ifi.hase.soprafs21.repository.LikeRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.PictureDBRepository;
 import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,18 +49,34 @@ public class PictureStorageService {
         String key = picture.getItemId() + "/" + pictureName;
         String response = fileStore.delete(bucketname,key);
         if(response=="Delete Successfully"){
+            long itemId = picture.getItemId();
+            Item item = itemRepository.findById(itemId);
+            item.setPicturecount(item.getPicturecount()-1);
             pictureDBRepository.delete(picture);
             return response;
         }else {
             return response;
         }
     }
+    // Delete all pictures of an Item out of the database and out of the S3-Bucket
+    // References the deleteImage function
+    public String deleteAllPicturesById(long id){
+        try{
+            List<Pictures> pictures = pictureDBRepository.findAllByItemId(id);
+            for(Pictures picture:pictures){
+                this.deleteImage(picture.getName());
+            }
+            pictureDBRepository.deleteAllByItemId(id);
+    }catch(IllegalStateException e){
+            return "Cannot Delete Pictures!";
+        }
+        return "Delete Successfull!";
+    }
 
     /*
      * This function is for uploading an image to the S3 Server and creating an Entity pictures
      * In S3 each item id has 1 Folder with all pictures in it!
      */
-
     public void uploadItemImage(long id, MultipartFile file) throws IOException {
         // 1. Check if image is empty
         if (file.isEmpty()) {
@@ -104,6 +119,5 @@ public class PictureStorageService {
         String filename =  uuid.toString()+ "-" + file.getOriginalFilename();
         fileStore.save(path, filename, Optional.of(metadata), file.getInputStream());
     }
-
 
 }
