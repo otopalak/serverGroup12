@@ -21,13 +21,13 @@ public class MatchService {
     public MatchService(@Qualifier ("matchRepository") MatchRepository matchRepository){
         this.matchRepository = matchRepository;
     }
-    public void createMatch(long itemIdOne, long itemIdTwo){
+    public Matches createMatch(long itemIdOne, long itemIdTwo){
         //check for existing match
         //actually this is redundant, because a match can only be created by two Likes, which are both tested for uniqueness already...
         for (Matches match: matchRepository.findAll()){
             if((match.getItemIdOne() == itemIdOne && match.getItemIdTwo() == itemIdTwo) ||
                 match.getItemIdOne() == itemIdTwo && match.getItemIdTwo() == itemIdOne){
-                return;
+                return match;
             }
         }
         //create new Match if it does not yet exist
@@ -38,9 +38,7 @@ public class MatchService {
         //add Match to DB
         matchRepository.save(newMatch);
         matchRepository.flush();
-    }
-    public List<Matches> getAllMatches(){
-        return matchRepository.findAll();
+        return newMatch;
     }
 
     public List<Matches> getAllMatchesByItemID(long itemId){
