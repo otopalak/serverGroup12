@@ -60,5 +60,5 @@ public class ItemServiceTest {
         assertEquals(testitem.getTitle(),iteamcreated.getTitle());
         assertEquals(testitem.getItemtags(),iteamcreated.getItemtags());
     }
-    
+
 }

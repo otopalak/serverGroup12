@@ -63,10 +63,16 @@ public class ItemService {
         // Changes the Description of the item
         if (!userInput.getDescription().isBlank()) {
             currentItem.setDescription(userInput.getDescription());
+        }else{
+            String baseErrorMessage = "You need a Description!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
         // Changes the Title of the item
         if (!userInput.getTitle().isBlank()) {
             currentItem.setTitle(userInput.getTitle());
+        }else{
+            String baseErrorMessage = "You need a Title!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
         itemRepository.save(currentItem);
         return currentItem;
