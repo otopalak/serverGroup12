@@ -20,11 +20,8 @@ public class LikeService {
         this.likeRepository = likeRepository;
         this.matchService = matchService;
     }
-    public List<Like> getAllLikes(){
-        return this.likeRepository.findAll();
-    }
 
-    public void createLike(Like likeInput) {
+    public Like createLike(Like likeInput) {
         //check if like already exists by itemIDSwiper and itemIDSwiped
         Long itemIDSwiper = likeInput.getItemIDSwiper();
         Long itemIDSwiped = likeInput.getItemIDSwiped();
@@ -34,7 +31,7 @@ public class LikeService {
             if(itemIDSwiper.equals(repoLike.getItemIDSwiper()) && itemIDSwiped.equals(repoLike.getItemIDSwiped())){
                 repoLike.setLiked(likeInput.getLiked());
                 checkLikeForMatch(repoLike);
-                return;
+                return repoLike;
             }
         }
         //add new Like to LikeRepository
@@ -43,6 +40,7 @@ public class LikeService {
 
         //check for new match
         checkLikeForMatch(likeInput);
+        return likeInput;
 
     }
     public void checkLikeForMatch(Like like){
