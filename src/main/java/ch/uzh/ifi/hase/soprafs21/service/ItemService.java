@@ -31,9 +31,10 @@ public class ItemService {
 
 
     // Saves the item in the database
-    public void createItem(Item itemToCreate) {
+    public Item createItem(Item itemToCreate) {
         itemRepository.save(itemToCreate);
         itemRepository.flush();
+        return itemToCreate;
     }
 
     // Get all items from the database
@@ -54,7 +55,7 @@ public class ItemService {
     }
 
     //Update the item
-    public void updateItem(Item currentItem, Item userInput) {
+    public Item updateItem(Item currentItem, Item userInput) {
         // Changes the Description of the item
         if (!userInput.getDescription().isBlank()) {
             currentItem.setDescription(userInput.getDescription());
@@ -64,6 +65,7 @@ public class ItemService {
             currentItem.setTitle(userInput.getTitle());
         }
         itemRepository.save(currentItem);
+        return currentItem;
     }
 
     // here just temporarely to test the chat feature
