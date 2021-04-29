@@ -33,4 +33,13 @@ public class LikeController {
         likeService.createLike(likeInput);
     }
 
+    @DeleteMapping("/likes/{likeId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void deleteLike(@PathVariable("likeId") long likeId){
+        likeService.deleteLikeByLikeId(likeId);
+    }
+
+
+
 }

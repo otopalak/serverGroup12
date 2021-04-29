@@ -45,6 +45,9 @@ public class LikeService {
         checkLikeForMatch(likeInput);
 
     }
+    public void deleteLikeByLikeId(long likeId){
+        likeRepository.deleteById(likeId);
+    }
     public void checkLikeForMatch(Like like){
         if (like.getLiked()){
             long itemIDSwiper = like.getItemIDSwiper();

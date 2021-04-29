@@ -55,13 +55,20 @@ public class ItemService {
         }
     }
     public List<Item> likeProposals(long myItemId) {
-        List<Item> possibleItemsToLike = this.getAllItems();
+        List<Item> allItems = this.getAllItems();
+        Item myItem = itemRepository.findById(myItemId);
+        List<Item> myItems = itemRepository.findItemsByUserId(myItem.getUserId());
+        List<Item> possibleItemsToLike = allItems;
+        for (Item item: myItems){
+            possibleItemsToLike.remove(item);
+        }
+
         List<Item> itemProposal = new ArrayList<>();
         for(Item item : possibleItemsToLike) {
-            Like likedItem = likeRepository.findByItemIDSwipedAndItemIDSwiper(item.getId(), myItemId);
-            if(likedItem == null){
-                itemProposal.add(item);
-            }
+
+            //Like likeForMyItem = likeRepository.findByItemIDSwipedAndItemIDSwiper(myItemId, item.getId());
+            //if(likeForMyItem != null && likeForMyItem.getLiked()){
+            itemProposal.add(item);
             if(itemProposal.size() > 5) {
                 break;
             }
