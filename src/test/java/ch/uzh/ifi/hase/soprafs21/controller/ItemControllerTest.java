@@ -9,7 +9,6 @@ import ch.uzh.ifi.hase.soprafs21.service.ItemService;
 import ch.uzh.ifi.hase.soprafs21.service.TagsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +58,7 @@ public class ItemControllerTest {
      * if we receive it back in a GET Request.
      */
     @Test
-    public void givenItem_whenGetItems_thenReturnJsonArray() throws Exception{
+    public void givenItem_whenGetItems_thenReturnJsonArray() throws Exception {
         // Given
         // We first create Tags and give them to our Item
         Tags tag1 = new Tags();
@@ -88,9 +87,9 @@ public class ItemControllerTest {
 
         // then we perform the action
         // Specifically for the ItemTags:
-        List<Tags> tagsfromEntity  = item.getItemtags();
+        List<Tags> tagsfromEntity = item.getItemtags();
         List<String> stringTags = new ArrayList<>();
-        for(Tags tag: tagsfromEntity){
+        for (Tags tag : tagsfromEntity) {
             stringTags.add(tag.getDescription());
         }
         System.out.println(item.getItemtags().toString());
@@ -102,6 +101,7 @@ public class ItemControllerTest {
 
 
     }
+
     /*
      * This test is for the GET Request (/items), to get all items. We check what happens, when two Item are created,
      * if we receive them both back in a GET Request.
@@ -122,7 +122,7 @@ public class ItemControllerTest {
 
 
         // This is what we are expecting to have returned
-        List<Item> allItems = Arrays.asList(item1,item2);
+        List<Item> allItems = Arrays.asList(item1, item2);
 
         // This now mocks the Itemservice -> We define, what getAllItems should return
         given(itemService.getAllItems()).willReturn(allItems);
@@ -141,12 +141,13 @@ public class ItemControllerTest {
                 .andExpect(jsonPath("$[1].tagsItem", is(item1.getItemtags())));
 
     }
+
     /*
      * In this Method, we will Test the POST Method for the Item.
      * We should receive an Item back after the Post method is done.
      */
     @Test
-    public void createItem_validInput_itemCreated() throws Exception{
+    public void createItem_validInput_itemCreated() throws Exception {
         // Given
         // Creates first the Tag
         Tags tag = new Tags();
@@ -210,7 +211,7 @@ public class ItemControllerTest {
         itemPutDTO.setTitle("New Title");
         itemPutDTO.setDescription("New Description");
 
-        given(itemService.updateItem(Mockito.any(),Mockito.any())).willReturn(item);
+        given(itemService.updateItem(Mockito.any(), Mockito.any())).willReturn(item);
 
         MockHttpServletRequestBuilder putRequest = put("/items/1/")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -221,11 +222,12 @@ public class ItemControllerTest {
                 .andExpect(status().isNoContent());
 
     }
+
     /*
      * This Test checks the GET Request to /items/{itemId}. It checks, if the user can get the item by the ID
      */
     @Test
-    public void givenItem_whenGetItemById_thenReturnJsonArray() throws Exception{
+    public void givenItem_whenGetItemById_thenReturnJsonArray() throws Exception {
         Item item = new Item();
         item.setId(1L);
         item.setDescription("Test Description");
@@ -244,12 +246,13 @@ public class ItemControllerTest {
                 .andExpect(jsonPath("$.title", is(item.getTitle())));
 
     }
+
     /*
      * This is a Test for the GET Mapping, that we only receive the Items of the specific UserID's
      * GET /users/userID/items
      */
     @Test
-    public void givenItems_whenGetItemByUserID_thenReturnJsonArray() throws Exception{
+    public void givenItems_whenGetItemByUserID_thenReturnJsonArray() throws Exception {
         // Items belonging to User with ID 1
         Item firstitem = new Item();
         firstitem.setId(1L);
@@ -271,7 +274,7 @@ public class ItemControllerTest {
         thirditem.setTitle("Title1");
 
         // This is what we are expecting to have returned
-        List<Item> allItems = Arrays.asList(firstitem,seconditem);
+        List<Item> allItems = Arrays.asList(firstitem, seconditem);
 
         // This now mocks the Itemservice -> We define, what getAllItems should return
         given(itemService.getAllItemsbyUserId(firstitem.getUserId())).willReturn(allItems);
@@ -289,10 +292,11 @@ public class ItemControllerTest {
                 .andExpect(jsonPath("$[1].tagsItem", is(seconditem.getItemtags())));
 
     }
+
     /*
      * This Test covers the delete Mapping /items/{itemId}
      */
-   @Test
+    @Test
     public void givenItemId_deleteItemById() throws Exception {
         Item item = new Item();
         item.setId(1L);
@@ -309,11 +313,12 @@ public class ItemControllerTest {
                 .andExpect(status().isOk());
 
     }
+
     /*
      * Tests the increase in Reports in the POST Mapping to "/items/{itemId}/report"
      */
     @Test
-    public void givenItem_increaseReportCount() throws Exception{
+    public void givenItem_increaseReportCount() throws Exception {
         Item item = new Item();
         item.setId(1L);
         item.setReportcount(0);
@@ -336,10 +341,10 @@ public class ItemControllerTest {
     }
 
 
-
     /**
      * Helper Method to convert userPostDTO into a JSON string such that the input can be processed
      * Input will look like this: {"name": "Test User", "username": "testUsername"}
+     *
      * @param object
      * @return string
      */
@@ -349,6 +354,7 @@ public class ItemControllerTest {
         }
         catch (JsonProcessingException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("The request body could not be created.%s", e.toString()));
+        }
     }
 }
 

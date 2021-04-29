@@ -32,6 +32,10 @@ public class ItemService {
 
     // Saves the item in the database
     public Item createItem(Item itemToCreate) {
+        if(itemToCreate.getDescription().isBlank()||itemToCreate.getTitle().isBlank()|| itemToCreate.getItemtags().isEmpty()){
+            String baseErrorMessage = "You need to define a Title a Description and Tags for the Item!";
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
+        }
         itemRepository.save(itemToCreate);
         itemRepository.flush();
         return itemToCreate;
@@ -47,7 +51,7 @@ public class ItemService {
         Item item = this.itemRepository.findById(id);
         if (item == null) {
             String baseErrorMessage = "The item with this id does not exist";
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
         else {
             return item;
