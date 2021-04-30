@@ -23,18 +23,20 @@ public class TagsService {
         if(tag != null){
             return true;
         }else{
+
             return false;
         }
     }
 
     // This creates a tag
-    public void createTag(Tags tag){
+    public Tags createTag(Tags tag){
         Boolean exists = this.checkIfTagExists(tag.getDescription());
         if(exists==true){
             String baseErrorMessage = "This tag allready exists";
             throw new ResponseStatusException(HttpStatus.CONFLICT,String.format(baseErrorMessage));
         }else{
             this.tagsRepository.save(tag);
+            return tag;
         }
     }
 
@@ -47,6 +49,10 @@ public class TagsService {
     // Get tag by Description
     public Tags getTagByDescription(String description){
         Tags tag = this.tagsRepository.getTagsByDescription(description);
+        if(tag==null){
+            String baseErrorMessage = "This tag doesn't exist!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT,String.format(baseErrorMessage));
+        }
         return tag;
     }
 
