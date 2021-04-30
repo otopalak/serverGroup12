@@ -31,9 +31,14 @@ public class ItemService {
 
 
     // Saves the item in the database
-    public void createItem(Item itemToCreate) {
+    public Item createItem(Item itemToCreate) {
+        if(itemToCreate.getDescription().isBlank()||itemToCreate.getTitle().isBlank()|| itemToCreate.getItemtags().isEmpty()){
+            String baseErrorMessage = "You need to define a Title a Description and Tags for the Item!";
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
+        }
         itemRepository.save(itemToCreate);
         itemRepository.flush();
+        return itemToCreate;
     }
 
     // Get all items from the database
@@ -46,7 +51,7 @@ public class ItemService {
         Item item = this.itemRepository.findById(id);
         if (item == null) {
             String baseErrorMessage = "The item with this id does not exist";
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
         else {
             return item;
@@ -54,16 +59,23 @@ public class ItemService {
     }
 
     //Update the item
-    public void updateItem(Item currentItem, Item userInput) {
+    public Item updateItem(Item currentItem, Item userInput) {
         // Changes the Description of the item
         if (!userInput.getDescription().isBlank()) {
             currentItem.setDescription(userInput.getDescription());
+        }else{
+            String baseErrorMessage = "You need a Description!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
         // Changes the Title of the item
         if (!userInput.getTitle().isBlank()) {
             currentItem.setTitle(userInput.getTitle());
+        }else{
+            String baseErrorMessage = "You need a Title!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
         itemRepository.save(currentItem);
+        return currentItem;
     }
 
     // here just temporarely to test the chat feature

@@ -46,7 +46,7 @@ public class ItemController {
     @PostMapping("/users/{userID}/items")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public void createItem(@PathVariable("userID")long userId, @RequestBody ItemPostDTO itemPostDTO) {
+    public ItemGetDTO createItem(@PathVariable("userID")long userId, @RequestBody ItemPostDTO itemPostDTO) {
         itemPostDTO.setUserId(userId);
         // Given a String List of Tags, we add them to the item
         List<String> tagsString = itemPostDTO.getTagsItem();
@@ -58,7 +58,17 @@ public class ItemController {
         Item newItem = DTOMapper.INSTANCE.convertItemPostDTOtoEntity(itemPostDTO);
         newItem.setItemtags(tagsTags);
         // Saves the item in the Database
-        itemService.createItem(newItem);
+        Item item = itemService.createItem(newItem);
+        // Send it back to the frontend
+        List<String> TAGS = new ArrayList<>();
+        List<Tags> TAGTAGS = item.getItemtags();
+        for(Tags TAG: TAGTAGS){
+            TAGS.add(TAG.getDescription());
+        }
+        ItemGetDTO itemGetDTO = DTOMapper.INSTANCE.convertEntityToItemGetDTO(item);
+        itemGetDTO.setTagsItem(TAGS);
+        return itemGetDTO;
+
     }
     @GetMapping("/users/{userID}/items")
     @ResponseStatus(HttpStatus.OK)
@@ -122,10 +132,11 @@ public class ItemController {
 
     @PostMapping("/items/{itemId}/report")
     @ResponseStatus(HttpStatus.OK)
-    public String increaseReportCount(@PathVariable("itemId")long itemId){
-        String message = "";
-        message = itemService.updateReportCount(itemId);
-        return message;
+    public ReportMessageDTO increaseReportCount(@PathVariable("itemId")long itemId){
+        ReportMessageDTO reportMessageDTO = new ReportMessageDTO();
+        String message = itemService.updateReportCount(itemId);
+        reportMessageDTO.setMessage(message);
+        return reportMessageDTO;
     }
 
     // Put Mapping for Updating an Item:
