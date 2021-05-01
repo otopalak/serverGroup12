@@ -139,6 +139,9 @@ public class ItemController {
         return reportMessageDTO;
     }
 
+    @GetMapping("/items/{itemId}/proposal")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
     public List<ItemGetDTO> itemProposal(@PathVariable("itemId") long itemId){
         List<Item> proposal = this.itemService.likeProposals(itemId);
         List <ItemGetDTO> itemGetDTOS = new ArrayList<>();
