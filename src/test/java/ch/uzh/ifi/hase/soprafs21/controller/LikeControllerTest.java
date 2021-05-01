@@ -41,14 +41,6 @@ public class LikeControllerTest {
     @MockBean
     private LikeService likeService;
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     public void testSwipe_validLikeRequest_successful() throws Exception {
         Like trueLike = new Like();

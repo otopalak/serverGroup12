@@ -24,7 +24,7 @@ public class MatchController {
     private final MatchService matchService;
 
     @Autowired
-    public MatchController(@Qualifier ("matchService") MatchService matchService){
+    public MatchController(MatchService matchService){
         this.matchService = matchService;
     }
 

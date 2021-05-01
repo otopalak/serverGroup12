@@ -4,6 +4,7 @@ import ch.uzh.ifi.hase.soprafs21.entity.Like;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.LikePostDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs21.service.LikeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,6 +14,7 @@ public class LikeController {
 
     private final LikeService likeService;
 
+    @Autowired
     LikeController (LikeService likeService){
         this.likeService = likeService;
     }
