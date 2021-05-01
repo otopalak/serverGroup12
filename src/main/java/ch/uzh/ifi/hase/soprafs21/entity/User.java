@@ -38,21 +38,48 @@ public class User implements Serializable {
     @Column(nullable = false)
     private UserStatus status;
 
-    @Column()
-    private String birthday;
+    @Column(nullable = false)
+    private String password;
 
     @CreationTimestamp
     private Timestamp timestamp;
 
-    @Column(nullable = false)
-    private String password;
+    @Column
+    private String address;
 
-    public String getBirthday() {
-        return birthday;
+    @Column
+    private String city;
+
+    @Column
+    private Integer postcode;
+
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public Integer getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(Integer postcode) {
+        this.postcode = postcode;
     }
 
     public Timestamp getTimestamp() {

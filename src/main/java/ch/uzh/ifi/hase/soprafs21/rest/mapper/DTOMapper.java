@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs21.rest.mapper;
 
 import ch.uzh.ifi.hase.soprafs21.entity.*;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.*;
+import org.apache.tomcat.jni.Address;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -21,6 +22,9 @@ public interface DTOMapper {
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "password", target = "password")
+    @Mapping(source = "address",target = "address")
+    @Mapping(source = "city",target = "city")
+    @Mapping(source = "postcode",target = "postcode")
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
     @Mapping(source = "title", target = "title")
@@ -42,8 +46,10 @@ public interface DTOMapper {
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "status", target = "status")
-    @Mapping(source = "birthday",target = "birthday")
     @Mapping(source = "token",target = "token")
+    @Mapping(source = "address",target = "address")
+    @Mapping(source = "city",target = "city")
+    @Mapping(source = "postcode",target = "postcode")
     UserGetDTO convertEntityToUserGetDTO(User user);
 
     @Mapping(source = "id", target = "id")
@@ -52,7 +58,6 @@ public interface DTOMapper {
     MatchesGetDTO convertEntityToMatchesGetDTO(Matches matches);
 
     @Mapping(source = "id",target = "id")
-    @Mapping(source = "birthday",target = "birthday")
     User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 
 

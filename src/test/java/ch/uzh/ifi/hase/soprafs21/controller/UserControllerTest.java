@@ -230,7 +230,6 @@ public class UserControllerTest {
         user.setId(1L);
         user.setName("Test User");
         user.setUsername("testUsername");
-        user.setBirthday("12.02.2020");
         user.setToken("1");
         user.setStatus(UserStatus.ONLINE);
 
@@ -260,7 +259,6 @@ public class UserControllerTest {
         user.setId(1L);
         user.setName("TestUser");
         user.setUsername("testuser");
-        user.setBirthday("12.02.2020");
         user.setToken("1");
         user.setStatus(UserStatus.OFFLINE);
 

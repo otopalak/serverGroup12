@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs21.controller;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Tags;
+import ch.uzh.ifi.hase.soprafs21.rest.dto.ItemGetDTOforVerification;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.ItemPostDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.ItemPutDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.ReportMessageDTO;
@@ -230,13 +231,18 @@ public class ItemControllerTest {
     public void givenItem_whenGetItemById_thenReturnJsonArray() throws Exception {
         Item item = new Item();
         item.setId(1L);
+        item.setUserId(1L);
         item.setDescription("Test Description");
         item.setTitle("Test Title");
+
+        ItemGetDTOforVerification itemGetDTOforVerification = new ItemGetDTOforVerification();
+        itemGetDTOforVerification.setUserid(1L);
 
         // Mocks the itemservice
         given(itemService.getItemById(item.getId())).willReturn(item);
 
-        MockHttpServletRequestBuilder getRequest = get("/items/1").contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder getRequest = get("/items/1").contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(itemGetDTOforVerification));
 
         // then
         mockMvc.perform(getRequest)

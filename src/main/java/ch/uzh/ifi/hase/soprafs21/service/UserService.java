@@ -115,9 +115,7 @@ public class UserService {
                 currentUser.setUsername(userInput.getUsername());
             }
         }
-        if(userInput.getBirthday()!=null){
-            currentUser.setBirthday(userInput.getBirthday());
-        }
+
         // Setting a new Password
         if(userInput.getPassword().isBlank()){
             String baseErrorMessage = "You cannot have an empty password!";

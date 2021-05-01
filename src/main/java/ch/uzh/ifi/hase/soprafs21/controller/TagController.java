@@ -25,8 +25,8 @@ public class TagController {
     @ResponseBody
     public TagGetDTO createTag(@RequestBody TagPostDTO tagPostDTO){
         Tags tag = DTOMapper.INSTANCE.convertTagPostDTOtoEntity(tagPostDTO);
-        this.tagsService.createTag(tag);
-        TagGetDTO tagGetDTO = DTOMapper.INSTANCE.convertEntityToTagGetDTO(tag);
+        Tags tag1 = this.tagsService.createTag(tag);
+        TagGetDTO tagGetDTO = DTOMapper.INSTANCE.convertEntityToTagGetDTO(tag1);
         return tagGetDTO;
     }
 

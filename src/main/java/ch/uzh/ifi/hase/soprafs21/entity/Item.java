@@ -1,5 +1,7 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
+import org.dom4j.Text;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,7 @@ public class Item {
     @Column(nullable = false)
     private Long userId;
 
-    @Column(nullable = false)
+    @Column(columnDefinition="LONGTEXT")
     private String description;
 
     @Column(nullable = false)
