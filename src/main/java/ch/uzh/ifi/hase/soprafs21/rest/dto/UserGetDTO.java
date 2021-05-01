@@ -11,8 +11,34 @@ public class UserGetDTO {
     private String username;
     private UserStatus status;
     private Timestamp timestamp;
-    private String birthday;
     private String token;
+    private String address;
+    private String city;
+    private Integer postcode;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public Integer getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(Integer postcode) {
+        this.postcode = postcode;
+    }
 
     public String getToken() {
         return token;
@@ -56,14 +82,6 @@ public class UserGetDTO {
 
     public Timestamp getTimestamp() {
         return timestamp;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
     }
 
     public void setTimestamp(Timestamp timestamp) {
