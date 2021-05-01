@@ -140,6 +140,20 @@ public class ItemController {
         return reportMessageDTO;
     }
 
+    @GetMapping("/items/{itemId}/proposal")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<ItemGetDTO> itemProposal(@PathVariable("itemId") long itemId){
+        List<Item> proposal = this.itemService.likeProposals(itemId);
+        List <ItemGetDTO> itemGetDTOS = new ArrayList<>();
+        // Internal representation to API representation
+        for(Item item: proposal){
+            ItemGetDTO itemGetDTO = DTOMapper.INSTANCE.convertEntityToItemGetDTO(item);
+            itemGetDTOS.add(itemGetDTO);
+        }
+        return itemGetDTOS;
+    }
+
     // Put Mapping for Updating an Item:
     @PutMapping("/items/{itemId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

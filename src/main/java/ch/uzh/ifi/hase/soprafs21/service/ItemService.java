@@ -3,21 +3,15 @@ package ch.uzh.ifi.hase.soprafs21.service;
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Matches;
 import ch.uzh.ifi.hase.soprafs21.entity.Tags;
+import ch.uzh.ifi.hase.soprafs21.entity.Like;
 import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.MatchRepository;
-import com.amazonaws.AmazonServiceException;
-import org.apache.http.entity.ContentType;
+import ch.uzh.ifi.hase.soprafs21.repository.LikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class ItemService {
@@ -28,6 +22,8 @@ public class ItemService {
     private MatchRepository matchRepository;
     @Autowired
     private PictureStorageService pictureStorageService;
+    @Autowired
+    private LikeRepository likeRepository;
 
 
     // Saves the item in the database
@@ -56,6 +52,20 @@ public class ItemService {
         else {
             return item;
         }
+    }
+    public List<Item> likeProposals(long myItemId) {
+        List<Item> possibleItemsToLike = this.getAllItems();
+        List<Item> itemProposal = new ArrayList<>();
+        for(Item item : possibleItemsToLike) {
+            Like likedItem = likeRepository.findByItemIDSwipedAndItemIDSwiper(item.getId(), myItemId);
+            if(likedItem == null){
+                itemProposal.add(item);
+            }
+            if(itemProposal.size() > 5) {
+                break;
+            }
+        }
+        return  itemProposal;
     }
 
     //Update the item
