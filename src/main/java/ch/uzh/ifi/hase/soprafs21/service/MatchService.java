@@ -5,14 +5,17 @@ import ch.uzh.ifi.hase.soprafs21.entity.Matches;
 import ch.uzh.ifi.hase.soprafs21.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service ("matchService")
+@Transactional
 public class MatchService {
     private final MatchRepository matchRepository;
 
@@ -39,6 +42,18 @@ public class MatchService {
         matchRepository.save(newMatch);
         matchRepository.flush();
         return newMatch;
+    }
+
+    public String deleteMatch(long matchID){
+        Matches match = matchRepository.findById(matchID);
+        if (match == null) {
+            String baseErrorMessage = "The match with this id does not exist";
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
+        }
+        else {
+            matchRepository.deleteById(matchID);
+            return "unmatch Successfull";
+        }
     }
 
     public List<Matches> getAllMatchesByItemID(long itemId){
