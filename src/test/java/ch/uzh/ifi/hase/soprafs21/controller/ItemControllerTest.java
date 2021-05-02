@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs21.controller;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Tags;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.ItemGetDTOforVerification;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.ItemPostDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.ItemPutDTO;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.ReportMessageDTO;
@@ -20,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import org.springframework.web.server.ResponseStatusException;
 
 
@@ -38,7 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ItemController.class)
 public class ItemControllerTest {
@@ -235,14 +232,13 @@ public class ItemControllerTest {
         item.setDescription("Test Description");
         item.setTitle("Test Title");
 
-        ItemGetDTOforVerification itemGetDTOforVerification = new ItemGetDTOforVerification();
-        itemGetDTOforVerification.setUserid(1L);
+
 
         // Mocks the itemservice
         given(itemService.getItemById(item.getId())).willReturn(item);
 
-        MockHttpServletRequestBuilder getRequest = get("/items/1").contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(itemGetDTOforVerification));
+        MockHttpServletRequestBuilder getRequest = get("/items/1").contentType(MediaType.APPLICATION_JSON);
+
 
         // then
         mockMvc.perform(getRequest)

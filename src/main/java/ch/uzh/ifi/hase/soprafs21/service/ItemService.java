@@ -155,20 +155,5 @@ public class ItemService {
         return message;
     }
 
-    /*
-     * This method checks, if the User is the owner of the Item. If not it will
-     * throw an error!
-     */
-    public void checkIfItemBelongsToUser(long itemId, long userid) {
-        Item item = itemRepository.findById(itemId);
-        if(item == null){
-            String baseErrorMessage = "This Item with this ID does not exist!";
-            throw new ResponseStatusException(HttpStatus.CONFLICT,String.format(baseErrorMessage));
-        }else{
-            if(item.getUserId()!=userid){
-                String baseErrorMessage = "You cannot view the pictures of other users!";
-                throw new ResponseStatusException(HttpStatus.CONFLICT,String.format(baseErrorMessage));
-            }
-        }
-    }
+
 }

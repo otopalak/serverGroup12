@@ -23,7 +23,7 @@ public class AmazonConfig {
 
         if (System.getenv("AWS_ACCESS_KEY_ID") == null ){
              awsCredentials = new BasicAWSCredentials("default",
-                   "defausslt");
+                   "default");
         }else {
              awsCredentials = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"),
                     System.getenv("AWS_SECRET_ACCESS_KEY"));

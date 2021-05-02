@@ -117,8 +117,7 @@ public class ItemController {
     @GetMapping("/items/{itemId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ItemGetDTO returnItemById(@PathVariable("itemId") long itemId,@RequestBody ItemGetDTOforVerification itemGetDTOforVerification){
-        this.itemService.checkIfItemBelongsToUser(itemId,itemGetDTOforVerification.getUserid());
+    public ItemGetDTO returnItemById(@PathVariable("itemId") long itemId){
         Item item = this.itemService.getItemById(itemId);
         // Getting all the tags from the item:
         List<Tags> tags = item.getItemtags();
