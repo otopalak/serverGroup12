@@ -141,6 +141,7 @@ public class ItemService {
         return items;
     }
 
+    // Updates the report count of the Item
     public String updateReportCount(long itemId) {
         Item item = itemRepository.findById(itemId);
         String message = "";

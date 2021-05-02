@@ -58,6 +58,11 @@ public interface DTOMapper {
     MatchesGetDTO convertEntityToMatchesGetDTO(Matches matches);
 
     @Mapping(source = "id",target = "id")
+    @Mapping(source = "username",target = "username")
+    @Mapping(source = "password",target = "password")
+    @Mapping(source = "address",target = "address")
+    @Mapping(source = "postcode",target = "postcode")
+    @Mapping(source = "city",target = "city")
     User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 
 

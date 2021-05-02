@@ -96,11 +96,19 @@ public class UserService {
     }
 
     /**
-     * This function updates the old User with the new Username or the new Birthday added
+     * This function updates the old User with the new Information
      */
     public User updateUser(User currentUser, User userInput){
         if(userInput.getUsername()==null){
             String baseErrorMessage = "You cannot choose an empty Username!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }
+        if(userInput.getPassword().isBlank()){
+            String baseErrorMessage = "You cannot choose an empty Password!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }
+        if(userInput.getAddress().isBlank() || userInput.getCity().isBlank()){
+            String baseErrorMessage = "You cannot have an empty address or City!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
         // We check first, if the userInputs username is empty
@@ -114,6 +122,11 @@ public class UserService {
             }else{
                 currentUser.setUsername(userInput.getUsername());
             }
+            currentUser.setPassword(userInput.getPassword());
+            currentUser.setAddress(userInput.getAddress());
+            currentUser.setCity(userInput.getCity());
+            currentUser.setPostcode(userInput.getPostcode());
+
         }
 
         // Setting a new Password
