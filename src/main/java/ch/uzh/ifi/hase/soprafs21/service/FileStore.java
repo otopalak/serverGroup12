@@ -42,7 +42,7 @@ public class FileStore {
         }
 
     }
-    // Downloads the file
+    // Downloads the file M3
     public byte[] download(String path,String key) {
         try {
             S3Object s3Object = s3.getObject(path, key);
