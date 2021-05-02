@@ -20,7 +20,7 @@ public class Item {
     @Column(nullable = false)
     private Long userId;
 
-    @Column(nullable = false)
+    @Column(columnDefinition="TEXT")
     private String description;
 
     @Column(nullable = false)
