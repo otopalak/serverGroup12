@@ -236,7 +236,6 @@ public class UserControllerTest {
         UserPutDTO userPutDTO = new UserPutDTO();
         userPutDTO.setId(1L);
         userPutDTO.setUsername("testUsername");
-        userPutDTO.setBirthday("12.02.2020");
 
         given(userService.updateUser(Mockito.any(),Mockito.any())).willReturn(user);
 

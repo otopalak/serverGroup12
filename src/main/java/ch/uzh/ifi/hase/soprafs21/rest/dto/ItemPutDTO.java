@@ -7,8 +7,7 @@ public class ItemPutDTO {
         private String description;
         private String title;
 
-
-        public String getDescription() {
+    public String getDescription() {
             return description;
         }
 

@@ -70,6 +70,9 @@ public class ItemController {
         return itemGetDTO;
 
     }
+    /*
+     * Get Mapping for all items of the user
+     */
     @GetMapping("/users/{userID}/items")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -129,6 +132,9 @@ public class ItemController {
         itemGetDTO.setTagsItem(tagsString);
         return itemGetDTO;
     }
+    /*
+     * Reports the item (3 reports -> Item gets deleted)
+     */
 
     @PostMapping("/items/{itemId}/report")
     @ResponseStatus(HttpStatus.OK)
@@ -153,7 +159,7 @@ public class ItemController {
         return itemGetDTOS;
     }
 
-    // Put Mapping for Updating an Item:
+    // Put Mapping for Updating an Item
     @PutMapping("/items/{itemId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateItem(@PathVariable("itemId") long itemId, @RequestBody ItemPutDTO itemPutDTO){
@@ -178,7 +184,7 @@ public class ItemController {
                                                @PathVariable Long idTwo) {
         itemService.createMatch(idOne, idTwo);
     }
-    // Get all items by choosen Tags List
+    // Get all items by chosen Tags
     @GetMapping("users/{userId}/items/tags")
     @ResponseStatus(HttpStatus.OK)
     public List<ItemGetDTO> getItemsByTags(@PathVariable("userId") long userId,@RequestBody TagsGetDTO tagsGetDTO){
