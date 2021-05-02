@@ -117,7 +117,9 @@ public class PictureStorageService {
         // Creates a folder for itemId
         String path = String.format("%s/%s", BucketName.Item_Image.getBucketName(), thisitem.getId());
         String filename =  uuid.toString()+ "-" + file.getOriginalFilename();
-        fileStore.save(path, filename, Optional.of(metadata), file.getInputStream());
+        if(System.getenv("AWS_ACCESS_KEY_ID") != null ){
+            fileStore.save(path, filename, Optional.of(metadata), file.getInputStream());
+        }
     }
 
 }
