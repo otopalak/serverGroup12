@@ -153,7 +153,14 @@ public class ItemController {
         List <ItemGetDTO> itemGetDTOS = new ArrayList<>();
         // Internal representation to API representation
         for(Item item: proposal){
+            // Getting all the tags from the item:
+            List<Tags> tags = item.getItemtags();
+            List<String> tagsString = new ArrayList<>();
             ItemGetDTO itemGetDTO = DTOMapper.INSTANCE.convertEntityToItemGetDTO(item);
+            for(Tags tag:tags){
+                tagsString.add(tag.getDescription());
+            }
+            itemGetDTO.setTagsItem(tagsString);
             itemGetDTOS.add(itemGetDTO);
         }
         return itemGetDTOS;
