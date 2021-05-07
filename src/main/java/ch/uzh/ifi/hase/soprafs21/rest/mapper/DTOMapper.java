@@ -83,5 +83,10 @@ public interface DTOMapper {
     @Mapping(source = "url",target = "url")
     PictureGetDTO convertEntityToPictureGetDTO(Pictures pictures);
 
+    @Mapping(source = "itemID1", target = "itemID1")
+    @Mapping(source = "itemID2", target = "itemID2")
+    @Mapping(source = "decision", target = "decision")
+    Swap convertSwapPostDTOToEntity(SwapPostDTO swapPostDTO);
+
 
 }
