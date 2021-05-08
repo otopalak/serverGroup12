@@ -94,7 +94,7 @@ class LikeServiceTest {
     void checkLikeForMatch_matchCreated() {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //assume trueLike1 is in the likeRepo
-        Mockito.when(likeRepository.findByItemIDSwipedAndItemIDSwiper(Mockito.any(),Mockito.any())).thenReturn(trueLike1);
+        Mockito.when(likeRepository.findByItemIDSwipedAndItemIDSwiper(Mockito.anyLong(),Mockito.anyLong())).thenReturn(trueLike1);
         //--> createMatch is called once
         likeService.checkLikeForMatch(trueLike2);
         //Mockito.verify(matchService, Mockito.times(2)).createMatch(Mockito.any(),Mockito.any());
