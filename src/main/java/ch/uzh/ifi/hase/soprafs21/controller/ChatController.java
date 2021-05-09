@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.controller;
 
+import ch.uzh.ifi.hase.soprafs21.constant.Game;
 import ch.uzh.ifi.hase.soprafs21.entity.ChatMessage;
 import ch.uzh.ifi.hase.soprafs21.constant.ChatNotification;
 import ch.uzh.ifi.hase.soprafs21.service.ChatMessageService;
