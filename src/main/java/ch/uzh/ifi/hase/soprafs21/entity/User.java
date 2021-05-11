@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Internal User Representation
@@ -23,7 +24,11 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customIDGenerator")
+    @GenericGenerator(
+            name = "customIDGenerator",
+            strategy = "generator.IDGenerator"
+    )
     private Long id;
 
     @Column(nullable = false)
