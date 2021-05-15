@@ -28,7 +28,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
                 .addEndpoint("/ws")
-                .setAllowedOrigins("http://sopra-fs21-group-12-client.herokuapp.com")
+                .setAllowedOrigins("http://localhost:3000")
                 .withSockJS();
     }
 

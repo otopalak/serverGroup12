@@ -145,11 +145,22 @@ public class ItemController {
         return reportMessageDTO;
     }
 
-    @GetMapping("/items/{itemId}/proposal")
+    @GetMapping("/items/{itemId}/proposal/")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<ItemGetDTO> itemProposal(@PathVariable("itemId") long itemId){
-        List<Item> proposal = this.itemService.likeProposals(itemId);
+    public List<ItemGetDTO> itemProposalNoTag(@PathVariable("itemId") long itemId) {
+        return getItems(itemId, "");
+    }
+
+    @GetMapping("/items/{itemId}/proposal/{searchTag}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<ItemGetDTO> itemProposal(@PathVariable("itemId") long itemId, @PathVariable("searchTag") String searchTag){
+        return getItems(itemId, searchTag);
+    }
+
+    private List<ItemGetDTO> getItems(long itemId, String searchTag) {
+        List<Item> proposal = this.itemService.likeProposals(itemId, searchTag);
         List <ItemGetDTO> itemGetDTOS = new ArrayList<>();
         // Internal representation to API representation
         for(Item item: proposal){
