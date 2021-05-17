@@ -145,7 +145,7 @@ public class ItemController {
         return reportMessageDTO;
     }
 
-    @GetMapping("/items/{itemId}/proposal/")
+    @GetMapping("/items/{itemId}/proposal")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<ItemGetDTO> itemProposalNoTag(@PathVariable("itemId") long itemId) {
