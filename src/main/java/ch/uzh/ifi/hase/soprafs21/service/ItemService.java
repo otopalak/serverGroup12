@@ -7,6 +7,7 @@ import ch.uzh.ifi.hase.soprafs21.entity.Like;
 import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.MatchRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.LikeRepository;
+import ch.uzh.ifi.hase.soprafs21.repository.TagsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ public class ItemService {
     private PictureStorageService pictureStorageService;
     @Autowired
     private LikeRepository likeRepository;
+    @Autowired
+    private TagsRepository tagsRepository;
 
 
     // Saves the item in the database
@@ -53,13 +56,21 @@ public class ItemService {
             return item;
         }
     }
-    public List<Item> likeProposals(long myItemId) {
+    public List<Item> likeProposals(long myItemId, String searchTag) {
         List<Item> possibleItemsToLike = this.getAllItems();
         List<Item> itemProposal = new ArrayList<>();
         for(Item item : possibleItemsToLike) {
             Like likedItem = likeRepository.findByItemIDSwipedAndItemIDSwiper(item.getId(), myItemId);
             if(likedItem == null && item.getId() != myItemId){
-                itemProposal.add(item);
+                List<Tags> tags = item.getItemtags();
+                // get tag
+                Tags tag = tagsRepository.getTagsByDescription(searchTag);
+                if (tags.contains(tag)){
+                    itemProposal.add(item);
+                }
+                if(tag == null){
+                    itemProposal.add(item);
+                }
             }
             if(itemProposal.size() > 5) {
                 break;
