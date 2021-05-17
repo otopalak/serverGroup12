@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs21.entity;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name="ITEMS")
-public class Item {
+public class Item implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
@@ -32,11 +33,37 @@ public class Item {
     @Column
     private int picturecount = 0;
 
-    public Item() {
-    }
-
     @ManyToMany
     private List<Tags> itemtags = new ArrayList<>();
+
+    @OneToMany(orphanRemoval = true, mappedBy = "itemIDSwiper")
+    private List<Like> likes_Swiper;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "itemIDSwiped")
+    private List<Like> likes_Swiped;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "itemIdOne")
+    private List<Matches> matches_itemOne;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "itemIdTwo")
+    private List<Matches> matches_itemTwo;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "itemID1")
+    private List<Swap> swaps_itemOne;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "itemID2")
+    private List<Swap> swaps_itemTwo;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "itemID1")
+    private List<SwapConfirmation> swapConfirmations_itemOne;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "itemID2")
+    private List<SwapConfirmation> swapConfirmations_itemTwo;
+
+
+
+    @ElementCollection
+    private List<Long> swapHistory;
 
     public int getPicturecount() {
         return picturecount;
@@ -93,6 +120,14 @@ public class Item {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<Long> getSwapHistory() {
+        return swapHistory;
+    }
+
+    public void setSwapHistory(List<Long> swapHistory) {
+        this.swapHistory = swapHistory;
     }
 }
 

@@ -4,6 +4,7 @@ package ch.uzh.ifi.hase.soprafs21.entity;
 import org.mapstruct.Mapping;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +14,13 @@ import java.util.List;
 
 @Entity
 @Table(name="tags")
-public class Tags {
+public class Tags implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
 
     @Column(nullable = false)
     private String description;
-
 
     @ManyToMany(mappedBy = "itemtags")
     private List<Item> items = new ArrayList<>();
