@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 @Entity
-@Table(name="ITEMS")
+@Table(name="appItems")
 public class Item implements Serializable {
     @Id
     @GeneratedValue
