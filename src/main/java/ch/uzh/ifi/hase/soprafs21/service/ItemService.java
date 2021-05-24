@@ -59,9 +59,11 @@ public class ItemService {
     public List<Item> likeProposals(long myItemId, String searchTag) {
         List<Item> possibleItemsToLike = this.getAllItems();
         List<Item> itemProposal = new ArrayList<>();
+        Item myItem = getItemById(myItemId);
+        Collections.shuffle(possibleItemsToLike, new Random());
         for(Item item : possibleItemsToLike) {
             Like likedItem = likeRepository.findByItemIDSwipedAndItemIDSwiper(item.getId(), myItemId);
-            if(likedItem == null && item.getId() != myItemId){
+            if(likedItem == null && ((int) (long) item.getUserId()) != ((int) (long) myItem.getUserId())){
                 List<Tags> tags = item.getItemtags();
                 // get tag
                 Tags tag = tagsRepository.getTagsByDescription(searchTag);
