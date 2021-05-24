@@ -60,8 +60,6 @@ public class Item implements Serializable {
     @OneToMany(orphanRemoval = true, mappedBy = "itemID2")
     private List<SwapConfirmation> swapConfirmations_itemTwo;
 
-
-
     @ElementCollection
     private List<Long> swapHistory;
 
@@ -76,7 +74,6 @@ public class Item implements Serializable {
     public List<Tags> getItemtags() {
         return itemtags;
     }
-
 
     public void setItemtags(List<Tags> itemtags) {
         this.itemtags = itemtags;

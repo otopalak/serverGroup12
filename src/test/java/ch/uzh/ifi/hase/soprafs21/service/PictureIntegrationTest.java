@@ -13,6 +13,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import org.apache.http.entity.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.Qualifier;
@@ -102,6 +103,7 @@ public class PictureIntegrationTest {
 
     }
     @Test
+    @Disabled
     public void upload_pictures_validInput_checkIfInDB_Integration() throws IOException {
         // Before:
 

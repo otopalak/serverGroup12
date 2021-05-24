@@ -11,9 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
+@Transactional
 public class ItemService {
 
     @Autowired
@@ -44,7 +47,7 @@ public class ItemService {
 
     // Get Item by ID -> Throws error, if Item with this id not present
     public Item getItemById(long id) {
-        Item item = this.itemRepository.findById(id);
+        Item item = itemRepository.findById(id);
         if (item == null) {
             String baseErrorMessage = "The item with this id does not exist";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
