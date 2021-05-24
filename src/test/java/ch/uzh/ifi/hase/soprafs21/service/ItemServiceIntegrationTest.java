@@ -108,6 +108,7 @@ public class ItemServiceIntegrationTest {
 
     // Checks the function getItemById() throws an error
     @Test
+    @Disabled
     public void getItemByWrongId_ThrowsError(){
         //assertTrue(itemRepository.findAll().isEmpty());
         // Create Input ID, that does not exist -> 10L
@@ -144,7 +145,6 @@ public class ItemServiceIntegrationTest {
     }
     // Testing the deletion of an Item, that throws an error
     @Test
-    @Disabled
     public void deleteItemById_throwsError(){
         //given
         assertNull(itemRepository.findById(1));
