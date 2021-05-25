@@ -6,33 +6,21 @@ public class UserPutDTO {
     private Long id;
     private String username;
     private String password;
-    private String address;
-    private String city;
-    private Integer postcode;
+    private Double longitude;
+    private Double latitude;
 
+    public Double getLongitude() { return longitude; }
 
-    public String getAddress() {
-        return address;
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public Integer getPostcode() {
-        return postcode;
-    }
-
-    public void setPostcode(Integer postcode) {
-        this.postcode = postcode;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     public String getPassword() {

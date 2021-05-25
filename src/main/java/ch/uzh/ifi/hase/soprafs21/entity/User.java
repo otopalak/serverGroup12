@@ -45,41 +45,31 @@ public class User implements Serializable {
     private Timestamp timestamp;
 
     @Column
-    private String address;
+    private Integer longitude;
 
     @Column
-    private String city;
+    private Integer latitude;
 
-    @Column
-    private Integer postcode;
 
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    public String getAddress() {
-        return address;
+    public Integer getLongitude() {
+        return longitude;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setLongitude(Integer longitude) {
+        this.longitude = longitude;
     }
 
-    public String getCity() {
-        return city;
+    public Integer getLatitude() {
+        return latitude;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public Integer getPostcode() {
-        return postcode;
-    }
-
-    public void setPostcode(Integer postcode) {
-        this.postcode = postcode;
+    public void setLatitude(Integer latitude) {
+        this.latitude = latitude;
     }
 
     public Timestamp getTimestamp() {
