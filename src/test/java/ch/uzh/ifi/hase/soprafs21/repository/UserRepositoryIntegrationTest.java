@@ -32,9 +32,9 @@ public class UserRepositoryIntegrationTest {
         user.setStatus(UserStatus.OFFLINE);
         user.setToken("1");
 
-
-        entityManager.persist(user);
-        entityManager.flush();
+        userRepository.save(user);
+        //entityManager.persist(user);
+        //entityManager.flush();
 
         // when
         User found = userRepository.findByName(user.getName());

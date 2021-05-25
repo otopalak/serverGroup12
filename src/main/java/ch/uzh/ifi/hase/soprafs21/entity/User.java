@@ -5,8 +5,11 @@ import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.ManyToAny;
 
 /**
  * Internal User Representation
@@ -52,6 +55,9 @@ public class User implements Serializable {
 
     @Column
     private Integer postcode;
+
+    @OneToMany(mappedBy = "userId")
+    private List<Item> items = new ArrayList<>();
 
 
     public static long getSerialVersionUID() {
@@ -136,5 +142,13 @@ public class User implements Serializable {
 
     public void setStatus(UserStatus status) {
         this.status = status;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

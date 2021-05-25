@@ -118,6 +118,18 @@ public class SwapConfirmationService {
             swapRepository.deleteAll(swapsOfOthersWithItem1);
             swapRepository.deleteAll(swapsOfOthersWithItem2);
 
+            //SwapHistory
+            Item item1 = itemRepository.findById(itemIDUser1);
+            List<Long> swapHistory1 = item1.getSwapHistory();
+            swapHistory1.add(itemIDUser1);
+
+            Item item2 = itemRepository.findById(itemIDUser2);
+            List<Long> swapHistory2 = item2.getSwapHistory();
+            swapHistory2.add(itemIDUser2);
+
+            item1.setSwapHistory(swapHistory2);
+            item2.setSwapHistory(swapHistory1);
+
             //assign both items to other user
             if (itemRepository.findById(itemIDUser1)!=null && itemRepository.findById(itemIDUser2)!=null) {
                 Item itemOfUser1 = itemRepository.findById(itemIDUser1);
@@ -128,6 +140,7 @@ public class SwapConfirmationService {
                 itemOfUser1.setUserId(userIDOfUser2);
                 itemOfUser2.setUserId(userIDOfUser1);
             }
+
             //clear SwapConfirmation
             swapConfirmationRepository.delete(swapConfirmation);
         }

@@ -26,6 +26,7 @@ class LikeServiceTest {
 
     @InjectMocks
     private LikeService likeService;
+
     private Like trueLike1;
     private Like trueLike2;
     private Like falseLike1;
