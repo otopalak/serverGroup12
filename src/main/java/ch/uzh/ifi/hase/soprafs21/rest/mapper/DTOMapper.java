@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs21.rest.mapper;
 
 import ch.uzh.ifi.hase.soprafs21.entity.*;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.*;
-import org.apache.tomcat.jni.Address;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -85,8 +84,7 @@ public interface DTOMapper {
 
     @Mapping(source = "itemID1", target = "itemID1")
     @Mapping(source = "itemID2", target = "itemID2")
-    @Mapping(source = "decision", target = "decision")
-    Swap convertSwapPostDTOToEntity(SwapPostDTO swapPostDTO);
-
-
+    @Mapping(source = "item1ConfirmsItem2", target = "item1ConfirmsItem2")
+    @Mapping(source = "item2ConfirmsItem1", target = "item2ConfirmsItem1")
+    SwapConfirmation convertSwapConfirmationPostDTOToEntity(SwapConfirmationPostDTO swapConfirmationPostDTO);
 }
