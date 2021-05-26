@@ -5,6 +5,7 @@ import ch.uzh.ifi.hase.soprafs21.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository("likeRepository")
@@ -14,5 +15,5 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
     Like findByLikeID(long likeID);
     Like findByItemIDSwiper(long itemIDSwiper);
     List<Like> findAllByItemIDSwiper(long itemIDSwiper);
-
+    List<Like> findAllByItemIDSwiped(long itemIDSwiped);
 }

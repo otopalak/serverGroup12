@@ -21,7 +21,7 @@ public class Item implements Serializable {
     @Column(nullable = false)
     private Long userId;
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable = false)
@@ -53,10 +53,10 @@ public class Item implements Serializable {
     private List<Matches> matches_itemTwo;
 
     @OneToMany(orphanRemoval = true, mappedBy = "itemID1")
-    private List<Swap> swaps_itemOne;
+    private List<SwapConfirmation> swaps_itemOne;
 
     @OneToMany(orphanRemoval = true, mappedBy = "itemID2")
-    private List<Swap> swaps_itemTwo;
+    private List<SwapConfirmation> swaps_itemTwo;
 
     @OneToMany(orphanRemoval = true, mappedBy = "itemID1")
     private List<SwapConfirmation> swapConfirmations_itemOne;
@@ -155,19 +155,19 @@ public class Item implements Serializable {
         this.matches_itemTwo = matches_itemTwo;
     }
 
-    public List<Swap> getSwaps_itemOne() {
+    public List<SwapConfirmation> getSwaps_itemOne() {
         return swaps_itemOne;
     }
 
-    public void setSwaps_itemOne(List<Swap> swaps_itemOne) {
+    public void setSwaps_itemOne(List<SwapConfirmation> swaps_itemOne) {
         this.swaps_itemOne = swaps_itemOne;
     }
 
-    public List<Swap> getSwaps_itemTwo() {
+    public List<SwapConfirmation> getSwaps_itemTwo() {
         return swaps_itemTwo;
     }
 
-    public void setSwaps_itemTwo(List<Swap> swaps_itemTwo) {
+    public void setSwaps_itemTwo(List<SwapConfirmation> swaps_itemTwo) {
         this.swaps_itemTwo = swaps_itemTwo;
     }
 
