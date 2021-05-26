@@ -34,7 +34,11 @@ public class Item implements Serializable {
     private int picturecount = 0;
 
     @ManyToMany
-    private List<Tags> itemtags = new ArrayList<>();
+//    @JoinTable(
+//            name = "items_tags",
+//            joinColumns = @JoinColumn(name = "item_id"),
+//            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private List<Tags> itemtags;
 
     @OneToMany(orphanRemoval = true, mappedBy = "itemIDSwiper")
     private List<Like> likes_Swiper;
@@ -62,30 +66,6 @@ public class Item implements Serializable {
 
     @ElementCollection
     private List<Long> swapHistory;
-
-    public int getPicturecount() {
-        return picturecount;
-    }
-
-    public void setPicturecount(int picturecount) {
-        this.picturecount = picturecount;
-    }
-
-    public List<Tags> getItemtags() {
-        return itemtags;
-    }
-
-    public void setItemtags(List<Tags> itemtags) {
-        this.itemtags = itemtags;
-    }
-
-    public int getReportcount() {
-        return reportcount;
-    }
-
-    public void setReportcount(int reportcount) {
-        this.reportcount = reportcount;
-    }
 
     public Long getId() {
         return id;
@@ -117,6 +97,94 @@ public class Item implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getReportcount() {
+        return reportcount;
+    }
+
+    public void setReportcount(int reportcount) {
+        this.reportcount = reportcount;
+    }
+
+    public int getPicturecount() {
+        return picturecount;
+    }
+
+    public void setPicturecount(int picturecount) {
+        this.picturecount = picturecount;
+    }
+
+    public List<Tags> getItemtags() {
+        return itemtags;
+    }
+
+    public void setItemtags(List<Tags> itemtags) {
+        this.itemtags = itemtags;
+    }
+
+    public List<Like> getLikes_Swiper() {
+        return likes_Swiper;
+    }
+
+    public void setLikes_Swiper(List<Like> likes_Swiper) {
+        this.likes_Swiper = likes_Swiper;
+    }
+
+    public List<Like> getLikes_Swiped() {
+        return likes_Swiped;
+    }
+
+    public void setLikes_Swiped(List<Like> likes_Swiped) {
+        this.likes_Swiped = likes_Swiped;
+    }
+
+    public List<Matches> getMatches_itemOne() {
+        return matches_itemOne;
+    }
+
+    public void setMatches_itemOne(List<Matches> matches_itemOne) {
+        this.matches_itemOne = matches_itemOne;
+    }
+
+    public List<Matches> getMatches_itemTwo() {
+        return matches_itemTwo;
+    }
+
+    public void setMatches_itemTwo(List<Matches> matches_itemTwo) {
+        this.matches_itemTwo = matches_itemTwo;
+    }
+
+    public List<Swap> getSwaps_itemOne() {
+        return swaps_itemOne;
+    }
+
+    public void setSwaps_itemOne(List<Swap> swaps_itemOne) {
+        this.swaps_itemOne = swaps_itemOne;
+    }
+
+    public List<Swap> getSwaps_itemTwo() {
+        return swaps_itemTwo;
+    }
+
+    public void setSwaps_itemTwo(List<Swap> swaps_itemTwo) {
+        this.swaps_itemTwo = swaps_itemTwo;
+    }
+
+    public List<SwapConfirmation> getSwapConfirmations_itemOne() {
+        return swapConfirmations_itemOne;
+    }
+
+    public void setSwapConfirmations_itemOne(List<SwapConfirmation> swapConfirmations_itemOne) {
+        this.swapConfirmations_itemOne = swapConfirmations_itemOne;
+    }
+
+    public List<SwapConfirmation> getSwapConfirmations_itemTwo() {
+        return swapConfirmations_itemTwo;
+    }
+
+    public void setSwapConfirmations_itemTwo(List<SwapConfirmation> swapConfirmations_itemTwo) {
+        this.swapConfirmations_itemTwo = swapConfirmations_itemTwo;
     }
 
     public List<Long> getSwapHistory() {

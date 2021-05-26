@@ -16,7 +16,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@WebAppConfiguration
 @SpringBootTest
 public class TagIntegrationTest {
 

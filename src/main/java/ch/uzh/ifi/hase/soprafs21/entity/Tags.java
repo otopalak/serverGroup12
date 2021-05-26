@@ -23,7 +23,7 @@ public class Tags implements Serializable {
     private String description;
 
     @ManyToMany(mappedBy = "itemtags")
-    private List<Item> items = new ArrayList<>();
+    private List<Item> items;
 
     public Long getId() {
         return id;
@@ -39,5 +39,13 @@ public class Tags implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }
