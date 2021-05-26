@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository("swapConfirmationRepository")
 public interface SwapConfirmationRepository extends JpaRepository<SwapConfirmation, Long> {
-    SwapConfirmation findByItemID1AndAndItemID2(Long itemID1, Long itemID2);
+    SwapConfirmation findByItemID1AndItemID2(Long itemID1, Long itemID2);
     List<SwapConfirmation> findByItemID1(Long itemID1);
     List<SwapConfirmation> findByItemID2(Long itemID2);
 
