@@ -46,7 +46,6 @@ public class SwapConfirmationController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public boolean checkTrueSwapConfirmation(@PathVariable("ownItemID") long ownItemID, @PathVariable("matchedItemID") long matchedItemID){
-        
+        return true;
     }
-
 }

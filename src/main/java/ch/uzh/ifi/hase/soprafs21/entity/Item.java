@@ -21,7 +21,7 @@ public class Item implements Serializable {
     @Column(nullable = false)
     private Long userId;
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable = false)
@@ -155,19 +155,19 @@ public class Item implements Serializable {
         this.matches_itemTwo = matches_itemTwo;
     }
 
-    public List<Swap> getSwaps_itemOne() {
+    public List<SwapConfirmation> getSwaps_itemOne() {
         return swaps_itemOne;
     }
 
-    public void setSwaps_itemOne(List<Swap> swaps_itemOne) {
+    public void setSwaps_itemOne(List<SwapConfirmation> swaps_itemOne) {
         this.swaps_itemOne = swaps_itemOne;
     }
 
-    public List<Swap> getSwaps_itemTwo() {
+    public List<SwapConfirmation> getSwaps_itemTwo() {
         return swaps_itemTwo;
     }
 
-    public void setSwaps_itemTwo(List<Swap> swaps_itemTwo) {
+    public void setSwaps_itemTwo(List<SwapConfirmation> swaps_itemTwo) {
         this.swaps_itemTwo = swaps_itemTwo;
     }
 
