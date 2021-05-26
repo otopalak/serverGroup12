@@ -25,6 +25,7 @@ public class SwapConfirmation implements Serializable {
     @Column(nullable = false)
     private Boolean item2ConfirmsItem1;
 
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

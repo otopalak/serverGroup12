@@ -36,8 +36,8 @@ public class SwapConfirmationService {
         long itemID1 = swapConfirmation.getItemID1();
         long itemID2 = swapConfirmation.getItemID2();
 
-        SwapConfirmation swapConfirmation1 = swapConfirmationRepository.findByItemID1AndAndItemID2(itemID1, itemID2);
-        SwapConfirmation swapConfirmation2 = swapConfirmationRepository.findByItemID1AndAndItemID2(itemID2, itemID1);
+        SwapConfirmation swapConfirmation1 = swapConfirmationRepository.findByItemID1AndItemID2(itemID1, itemID2);
+        SwapConfirmation swapConfirmation2 = swapConfirmationRepository.findByItemID1AndItemID2(itemID2, itemID1);
 
         if(swapConfirmation1 != null){
             swapConfirmation1.setItem1ConfirmsItem2(true);
@@ -96,8 +96,8 @@ public class SwapConfirmationService {
 
     public String cancelSwapConfirmation(long itemID1, long itemID2){
         // search for a SwapConfirmation
-        SwapConfirmation swapConfirmation1 = swapConfirmationRepository.findByItemID1AndAndItemID2(itemID1, itemID2);
-        SwapConfirmation swapConfirmation2 = swapConfirmationRepository.findByItemID1AndAndItemID2(itemID2, itemID1);
+        SwapConfirmation swapConfirmation1 = swapConfirmationRepository.findByItemID1AndItemID2(itemID1, itemID2);
+        SwapConfirmation swapConfirmation2 = swapConfirmationRepository.findByItemID1AndItemID2(itemID2, itemID1);
 
         //Swap confirmation does not exist
         if (swapConfirmation1 == null && swapConfirmation2 == null){
@@ -179,5 +179,19 @@ public class SwapConfirmationService {
 
             swapConfirmationRepository.deleteAll(swapConfirmationsToDelete);
         }
+    }
+
+    public boolean check(long ownItemID, long matchedItemID) {
+        SwapConfirmation swapConfirmation1 = swapConfirmationRepository.findByItemID1AndItemID2(ownItemID, matchedItemID);
+        SwapConfirmation swapConfirmation2 = swapConfirmationRepository.findByItemID1AndItemID2(matchedItemID, ownItemID);
+
+        if (swapConfirmation1 != null){
+            return swapConfirmation1.getItem1ConfirmsItem2();
+        }
+
+        if (swapConfirmation2 != null){
+            return swapConfirmation2.getItem2ConfirmsItem1();
+        }
+        return false;
     }
 }

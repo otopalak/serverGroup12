@@ -15,7 +15,11 @@ public class Matches implements Serializable{
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(nullable = false)
     private Long itemIdOne;
+
+    @Column(nullable = false)
     private Long itemIdTwo;
 
     public Long getId() {
