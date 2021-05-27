@@ -32,9 +32,11 @@ public class PictureController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseStatus(HttpStatus.OK)
-    public void uploadProfileImage(@PathVariable("itemId")long itemId,
+    @ResponseBody
+    public String uploadProfileImage(@PathVariable("itemId")long itemId,
                                    @RequestParam("file") MultipartFile file) throws IOException {
-        pictureStorageService.uploadItemImage(itemId, file);
+       String message = pictureStorageService.uploadItemImage(itemId, file);
+       return message;
     }
 
     // Retrieve all pictures
