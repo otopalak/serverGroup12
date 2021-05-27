@@ -7,8 +7,6 @@ import java.io.Serializable;
 @Table(name = "SwapConfirmation")
 public class SwapConfirmation implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue
     private Long swapConfID;
@@ -24,10 +22,6 @@ public class SwapConfirmation implements Serializable {
 
     @Column(nullable = false)
     private Boolean item2ConfirmsItem1 = false;
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
     public Long getSwapConfID() {
         return swapConfID;
