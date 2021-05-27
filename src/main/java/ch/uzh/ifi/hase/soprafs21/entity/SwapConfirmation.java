@@ -20,11 +20,10 @@ public class SwapConfirmation implements Serializable {
     private Long itemID2;
 
     @Column(nullable = false)
-    private Boolean item1ConfirmsItem2;
+    private Boolean item1ConfirmsItem2 = false;
 
     @Column(nullable = false)
-    private Boolean item2ConfirmsItem1;
-
+    private Boolean item2ConfirmsItem1 = false;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
