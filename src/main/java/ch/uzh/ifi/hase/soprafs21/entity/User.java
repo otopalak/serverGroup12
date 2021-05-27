@@ -59,7 +59,6 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "userId")
     private List<Item> items = new ArrayList<>();
 
-
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
