@@ -38,12 +38,12 @@ public class SwapConfirmationController {
     @PutMapping("/swap/cancel/{itemID1}/{itemID2}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void cancel(@PathVariable("itemID1") long itemID1, @PathVariable("itemID2") long itemID2) {
-        swapConfirmationService.cancelSwapConfirmation(itemID1, itemID2);
+    public String cancel(@PathVariable("itemID1") long itemID1, @PathVariable("itemID2") long itemID2) {
+        return swapConfirmationService.cancelSwapConfirmation(itemID1, itemID2);
     }
 
     @GetMapping("/swap/check/{ownItemID}/{matchedItemID}")
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public boolean checkTrueSwapConfirmation(@PathVariable("ownItemID") long ownItemID, @PathVariable("matchedItemID") long matchedItemID){
         return swapConfirmationService.check(ownItemID, matchedItemID);
