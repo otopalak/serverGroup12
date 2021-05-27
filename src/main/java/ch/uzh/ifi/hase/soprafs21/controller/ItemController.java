@@ -202,29 +202,7 @@ public class ItemController {
                                                @PathVariable Long idTwo) {
         itemService.createMatch(idOne, idTwo);
     }
-    // Get all items by chosen Tags
-    @GetMapping("users/{userId}/items/tags")
-    @ResponseStatus(HttpStatus.OK)
-    public List<ItemGetDTO> getItemsByTags(@PathVariable("userId") long userId,@RequestBody TagsGetDTO tagsGetDTO){
-        List<Item> items = new ArrayList<>();
-        List<String> tags = tagsGetDTO.getTags();
-        items = itemService.getItemByTagName(tags,userId);
-        // Returning a list of ItemGetDTO's
-        List <ItemGetDTO> itemGetDTOS = new ArrayList<>();
-        // Internal representation to API representation
-        for(Item item: items){
-            // Adding the tags to the itemGetDTO's
-            List<String> tagsToConvert = new ArrayList<>();
-            List<Tags> tagsTags = item.getItemtags();
-            ItemGetDTO itemGetDTO = DTOMapper.INSTANCE.convertEntityToItemGetDTO(item);
-            for(Tags tagtoAdd: tagsTags){
-                tagsToConvert.add(tagtoAdd.getDescription());
-            }
-            itemGetDTO.setTagsItem(tagsToConvert);
-            itemGetDTOS.add(itemGetDTO);
-        }
-        return itemGetDTOS;
-    }
+
     //this return a list containing all itemId's for which the item has been swapped
     // if my current item1(id=1) swaps with item2(id=2), --> item2 is now mine       GET(.../2) returns [1]
     // then my retrieved item2 swaps again with item3(id=3), -->item3 is now mine    GET(.../3) returns [1,2], GET(.../3) returns [2]
