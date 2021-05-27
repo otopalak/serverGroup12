@@ -52,12 +52,6 @@ public class Item implements Serializable {
     @OneToMany(orphanRemoval = true, mappedBy = "itemIdTwo")
     private List<Matches> matches_itemTwo;
 
-//    @OneToMany(orphanRemoval = true, mappedBy = "itemID1")
-//    private List<SwapConfirmation> swaps_itemOne;
-//
-//    @OneToMany(orphanRemoval = true, mappedBy = "itemID2")
-//    private List<SwapConfirmation> swaps_itemTwo;
-
     @OneToMany(orphanRemoval = true, mappedBy = "itemID1")
     private List<SwapConfirmation> swapConfirmations_itemOne;
 
