@@ -74,6 +74,7 @@ class ItemRepositoryTest {
     }
 
     @Test
+    @Disabled
     void findItemsByUserIdFound() {
         userRepository.save(user);
         tagsRepository.save(tag);
