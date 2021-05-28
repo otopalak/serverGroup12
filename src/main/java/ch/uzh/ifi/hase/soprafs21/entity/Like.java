@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs21.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "LIKES") // "LIKE" funktioniert nicht aus irgendeinem Grund...

@@ -1,7 +1,5 @@
 package ch.uzh.ifi.hase.soprafs21.rest.dto;
 
-import java.util.List;
-
 public class PictureGetDTO {
     private String name;
     private String url;
