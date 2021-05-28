@@ -9,7 +9,6 @@ import ch.uzh.ifi.hase.soprafs21.service.ItemService;
 import ch.uzh.ifi.hase.soprafs21.service.TagsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @WebMvcTest(ItemController.class)
 public class ItemControllerTest {
@@ -91,7 +90,7 @@ public class ItemControllerTest {
         for (Tags tag : tagsfromEntity) {
             stringTags.add(tag.getDescription());
         }
-        System.out.println(item.getItemtags().toString());
+
         mockMvc.perform(getRequest).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].title", is(item.getTitle())))
@@ -355,6 +354,52 @@ public class ItemControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message", is(message)));
 
+    }
+    @Test
+    public void swapHistoryTest() throws Exception {
+        // Given
+        // We first create Tags and give them to our Item
+        Tags tag1 = new Tags();
+        Tags tag2 = new Tags();
+        tag1.setDescription("TestTag1");
+        tag2.setDescription("TestTag2");
+        List<Tags> tags = new ArrayList<>();
+        tags.add(tag1);
+        tags.add(tag2);
+
+        // We create an Item with Description, Title and The tags
+        Item item1 = new Item();
+        item1.setTitle("Title1");
+        item1.setDescription("Test Description1");
+        item1.setItemtags(tags);
+
+        Item item2 = new Item();
+        item2.setTitle("Title2");
+        item2.setDescription("Test Description2");
+        item2.setItemtags(tags);
+
+        Item item3 = new Item();
+        item3.setTitle("Title2");
+        item3.setDescription("Test Description2");
+        item3.setItemtags(tags);
+
+
+        // assume item1 has changed with item2
+        // then item2 changed with item 3
+        List<String> swapHistoryItem3 = new ArrayList<>();
+        swapHistoryItem3.add(item1.getTitle());
+        swapHistoryItem3.add(item2.getTitle());
+
+        item3.setSwapHistory(swapHistoryItem3);
+
+        // This now mocks the Itemservice -> We define, what getAllItems should return
+        given(itemService.getItemById(3)).willReturn(item3);
+
+        //when
+        MockHttpServletRequestBuilder getRequest = get("/item/swapHistory/3").contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(getRequest).andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 
 

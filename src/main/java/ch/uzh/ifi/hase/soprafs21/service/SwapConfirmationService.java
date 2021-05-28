@@ -117,12 +117,16 @@ public class SwapConfirmationService {
 
             //SwapHistory
             Item item1 = itemRepository.findById(itemIDUser1);
-            List<Long> swapHistory1 = item1.getSwapHistory();
-            swapHistory1.add(itemIDUser1);
-
             Item item2 = itemRepository.findById(itemIDUser2);
-            List<Long> swapHistory2 = item2.getSwapHistory();
-            swapHistory2.add(itemIDUser2);
+
+            String itemTitle1 = item1.getTitle();
+            String itemTitle2 = item2.getTitle();
+
+            List<String> swapHistory1 = item1.getSwapHistory();
+            swapHistory1.add(itemTitle1);
+
+            List<String> swapHistory2 = item2.getSwapHistory();
+            swapHistory2.add(itemTitle2);
 
             item1.setSwapHistory(swapHistory2);
             item2.setSwapHistory(swapHistory1);

@@ -56,7 +56,7 @@ public class User implements Serializable {
     @Column
     private Integer postcode;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(orphanRemoval = true, mappedBy = "userId")
     private List<Item> items = new ArrayList<>();
 
     public static long getSerialVersionUID() {
