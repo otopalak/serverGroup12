@@ -126,17 +126,12 @@ public class UserService {
             currentUser.setAddress(userInput.getAddress());
             currentUser.setCity(userInput.getCity());
             currentUser.setPostcode(userInput.getPostcode());
+            currentUser.setPassword(userInput.getPassword());
+            userRepository.save(currentUser);
+            userRepository.flush();
+            return currentUser;
 
         }
-
-        // Setting a new Password
-        if(userInput.getPassword().isBlank()){
-            String baseErrorMessage = "You cannot have an empty password!";
-            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
-        }else{ currentUser.setPassword(userInput.getPassword());
-        }
-        userRepository.save(currentUser);
-        userRepository.flush();
         return currentUser;
     }
 
