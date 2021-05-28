@@ -59,7 +59,7 @@ public class Item implements Serializable {
     private List<SwapConfirmation> swapConfirmations_itemTwo;
 
     @ElementCollection
-    private List<Long> swapHistory;
+    private List<String> swapHistory;
 
     public Long getId() {
         return id;
@@ -181,11 +181,11 @@ public class Item implements Serializable {
         this.swapConfirmations_itemTwo = swapConfirmations_itemTwo;
     }
 
-    public List<Long> getSwapHistory() {
+    public List<String> getSwapHistory() {
         return swapHistory;
     }
 
-    public void setSwapHistory(List<Long> swapHistory) {
+    public void setSwapHistory(List<String> swapHistory) {
         this.swapHistory = swapHistory;
     }
 }

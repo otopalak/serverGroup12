@@ -61,4 +61,8 @@ public class ItemServiceTest {
         assertEquals(testitem.getItemtags(),iteamcreated.getItemtags());
     }
 
+    @Test
+    public void likeProposalsTest(){
+    }
+
 }

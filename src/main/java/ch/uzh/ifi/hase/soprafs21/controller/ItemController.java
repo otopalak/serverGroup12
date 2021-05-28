@@ -199,16 +199,14 @@ public class ItemController {
     // creates a match between idOne and idTwo
     @GetMapping("/item/{idOne}/{idTwo}")
     public void findChatMessages (@PathVariable Long idOne,
-                                               @PathVariable Long idTwo) {
+                                  @PathVariable Long idTwo) {
         itemService.createMatch(idOne, idTwo);
     }
 
     //this return a list containing all itemId's for which the item has been swapped
-    // if my current item1(id=1) swaps with item2(id=2), --> item2 is now mine       GET(.../2) returns [1]
-    // then my retrieved item2 swaps again with item3(id=3), -->item3 is now mine    GET(.../3) returns [1,2], GET(.../3) returns [2]
     @GetMapping("/item/swapHistory/{itemId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Long> getSwapHistory(@PathVariable("itemId") long itemId){
+    public List<String> getSwapHistory(@PathVariable("itemId") long itemId){
         return itemService.getItemById(itemId).getSwapHistory();
     }
 }

@@ -23,13 +23,6 @@ public class Like implements Serializable {
     @Column(nullable = false)
     private Boolean liked;
 
-//    @OneToMany(orphanRemoval = true, mappedBy = "itemIdOne")
-//    private List<Matches> matches_itemOne;
-//
-//    @OneToMany(orphanRemoval = true, mappedBy = "itemIdTwo")
-//    private List<SwapConfirmation> matches_itemTwo;
-
-
     public Long getLikeID() {
         return likeID;
     }
