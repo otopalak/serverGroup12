@@ -7,26 +7,13 @@ import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.TagsRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
-import org.junit.platform.commons.function.Try;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.server.ResponseStatusException;
 
-
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ItemServiceIntegrationTest {
 
     @Qualifier("itemRepository")
@@ -60,7 +48,6 @@ public class ItemServiceIntegrationTest {
 
     @BeforeEach
     public void setup() {
-
         //create User
         user = new User();
         user.setId(1L);
@@ -108,12 +95,13 @@ public class ItemServiceIntegrationTest {
 
     // Checks the function getItemById() throws an error
     @Test
-    @Disabled
     public void getItemByWrongId_ThrowsError(){
-        //assertTrue(itemRepository.findAll().isEmpty());
+        itemRepository.deleteAll();
+        assertTrue(itemRepository.findAll().isEmpty());
         // Create Input ID, that does not exist -> 10L
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
         tagsRepository.save(tag);
+        item.setUserId(savedUser.getId());
         itemRepository.save(item);
 
         try{
@@ -286,13 +274,13 @@ public class ItemServiceIntegrationTest {
     // In this test we check, if the item also gets deleted, after having
     // count == 3
     @Test
-    @Disabled
     public void itemGetsDeleted_Count3(){
         //given
-        assertNull(itemRepository.findById(1));
+        assertTrue(itemRepository.findAll().isEmpty());
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
         tagsRepository.save(tag);
+        item.setUserId(savedUser.getId());
 
         // We create an Item with 1 Report
         // Creating the Items
@@ -303,7 +291,7 @@ public class ItemServiceIntegrationTest {
         String message = itemService.updateReportCount(repoItem.getId());
         // We check, that the item is also deleted
         assertEquals(message,"The item had 3 reports and was deleted!");
-        assertEquals(itemRepository.findById(item.getId()), null);
+        assertTrue(itemRepository.findById(item.getId()).isEmpty());
     }
 
 }
