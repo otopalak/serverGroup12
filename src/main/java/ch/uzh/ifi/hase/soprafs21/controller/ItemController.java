@@ -195,13 +195,7 @@ public class ItemController {
         return delete;
     }
 
-    // To remove only here for testing
-    // creates a match between idOne and idTwo
-    @GetMapping("/item/{idOne}/{idTwo}")
-    public void findChatMessages (@PathVariable Long idOne,
-                                               @PathVariable Long idTwo) {
-        itemService.createMatch(idOne, idTwo);
-    }
+
     // Get all items by chosen Tags
     @GetMapping("users/{userId}/items/tags")
     @ResponseStatus(HttpStatus.OK)

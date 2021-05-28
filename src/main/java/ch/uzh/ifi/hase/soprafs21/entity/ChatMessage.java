@@ -1,7 +1,5 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
-import ch.uzh.ifi.hase.soprafs21.constant.MessageStatus;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -22,7 +20,6 @@ public class ChatMessage {
     private String recipientName;
     private String content;
     private Date timestamp;
-    private MessageStatus status;
 
     public Long getMatchId() {
         return matchId;
@@ -32,13 +29,6 @@ public class ChatMessage {
         this.matchId = matchId;
     }
 
-    public MessageStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(MessageStatus status) {
-        this.status = status;
-    }
 
     public Long getId() {
         return id;

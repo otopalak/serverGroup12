@@ -31,12 +31,6 @@ public class ChatController {
                         saved.getSenderName()));
     }
 
-    @GetMapping("/messages/{matchId}/count")
-    public ResponseEntity<Long> countNewMessages(@PathVariable Long matchId) {
-        return ResponseEntity
-                .ok(chatMessageService.countNewMessages(matchId));
-    }
-
     @GetMapping("/messages/{matchId}")
     public ResponseEntity<?> findChatMessages ( @PathVariable Long matchId){
         return ResponseEntity
