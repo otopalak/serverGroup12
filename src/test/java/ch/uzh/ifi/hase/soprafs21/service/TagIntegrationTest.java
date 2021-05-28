@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -17,6 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TagIntegrationTest {
 
     @Qualifier("tagsRepository")
@@ -28,6 +30,7 @@ public class TagIntegrationTest {
 
     @BeforeEach
     public void setup(){
+
         tagsRepository.deleteAll();
     }
 
@@ -35,7 +38,6 @@ public class TagIntegrationTest {
      * Checks the create Tag function
      */
     @Test
-    @Disabled
     public void createTag_validInputs_success(){
         // Creating a Tag
         Tags tag = new Tags();
@@ -51,7 +53,6 @@ public class TagIntegrationTest {
      * It will thus throw an error, as the tag is allready inside the DB
      */
     @Test
-    @Disabled
     public void createTagFails_invalidInput(){
         Tags tag = new Tags();
         tag.setDescription("Tag");
@@ -66,7 +67,6 @@ public class TagIntegrationTest {
      * This test checks the getALLTags functionality
      */
     @Test
-    @Disabled
     public void getAllTags_returnsAllTags(){
         // When
         Tags tag = new Tags();
@@ -81,7 +81,6 @@ public class TagIntegrationTest {
      * This function will check the function getTagByDescription()
      */
     @Test
-    @Disabled
     public void getTag_byDescription_validInput(){
         Tags tag = new Tags();
         tag.setDescription("Tag");
@@ -96,7 +95,6 @@ public class TagIntegrationTest {
      * Same test now with a wrong input -> Descripton not found in a tag
      */
     @Test
-    @Disabled
     public void getTag_byDescription_invalidvalidInput(){
         Tags tag = new Tags();
         tag.setDescription("Tag");

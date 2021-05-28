@@ -43,7 +43,7 @@ class ItemRepositoryTest {
     @BeforeEach
     void setUp() {
         user = new User();
-        user.setId(1L);
+        //user.setId(1L); //do not set id here
         user.setName("Firstname Lastname");
         user.setUsername("firstname@lastname");
         user.setPassword("1234");
@@ -60,7 +60,7 @@ class ItemRepositoryTest {
         item = new Item();
         //do not set ItemId here, it will be generated when item is inserted in the repo
         //otherwise the itemID is increased by one, this leads to misbehaving
-        item.setUserId(user.getId());
+        //item.setUserId(user.getId());
         item.setDescription("Test Description");
         item.setTitle("Title");
         List<Tags> tags = new ArrayList<>();
@@ -69,14 +69,10 @@ class ItemRepositoryTest {
         //itemRepository.save(item);
     }
 
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
-    @Disabled
     void findItemsByUserIdFound() {
-        userRepository.save(user);
+        User repoUser = userRepository.save(user);
+        item.setUserId(repoUser.getId());
         tagsRepository.save(tag);
         itemRepository.save(item);
 
@@ -86,7 +82,8 @@ class ItemRepositoryTest {
 
     @Test
     void findItemByID() {
-        userRepository.save(user);
+        User repoUser = userRepository.save(user);
+        item.setUserId(repoUser.getId());
         tagsRepository.save(tag);
         itemRepository.save(item);
 
@@ -94,10 +91,10 @@ class ItemRepositoryTest {
     }
 
     @Test
-    @Disabled
     void findByIdFound() {
         //this is implemented by JPA and we actually do not have to test this.
-        userRepository.save(user);
+        User repoUser = userRepository.save(user);
+        item.setUserId(repoUser.getId());
         tagsRepository.save(tag);
         itemRepository.save(item);
 
@@ -108,7 +105,25 @@ class ItemRepositoryTest {
     }
 
     @Test
-    @Disabled
     void findItemsByUserId() {
+        Item item2 = new Item();
+        item2.setDescription("Test Description");
+        item2.setTitle("Title");
+        List<Tags> tags = new ArrayList<>();
+        tags.add(tag);
+        item2.setItemtags(tags);
+
+        User repoUser = userRepository.save(user);
+        item.setUserId(repoUser.getId());
+        item2.setUserId(repoUser.getId());
+
+        tagsRepository.save(tag);
+        itemRepository.save(item);
+        itemRepository.save(item2);
+
+        List<Item> dbItems = itemRepository.findItemsByUserId(repoUser.getId());
+
+        assertEquals(item, dbItems.get(0));
+        assertEquals(item2, dbItems.get(1));
     }
 }

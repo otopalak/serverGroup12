@@ -1,12 +1,15 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
 
+import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Pictures;
 import ch.uzh.ifi.hase.soprafs21.entity.Tags;
+import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.PictureDBRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.TagsRepository;
+import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
 import com.amazonaws.auth.AnonymousAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -26,6 +29,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
@@ -43,10 +47,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 @WebAppConfiguration
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class PictureIntegrationTest {
 
     @Autowired
     private PictureDBRepository pictureDBRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private ItemRepository itemRepository;
@@ -67,13 +75,6 @@ public class PictureIntegrationTest {
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
-
-
-    @BeforeEach
-    public void setup(){
-        itemRepository.deleteAll();
-        pictureDBRepository.deleteAll();
-    }
 
 
     /*
@@ -103,9 +104,15 @@ public class PictureIntegrationTest {
 
     }
     @Test
-    @Disabled
     public void upload_pictures_validInput_checkIfInDB_Integration() throws IOException {
         // Before:
+        User user = new User();
+        user.setName("Firstname Lastname");
+        user.setUsername("firstname@lastname");
+        user.setPassword("1234");
+        user.setStatus(UserStatus.OFFLINE);
+        user.setToken("1");
+        User savedUser = userRepository.save(user);
 
         // Create a Tag
         Tags tag = new Tags();
@@ -116,12 +123,13 @@ public class PictureIntegrationTest {
 
         // We create an item for the specific pictures
         Item item = new Item();
-        item.setUserId(1L);
+        item.setUserId(savedUser.getId());
+        //item.setUserId(1L);
         item.setDescription("Description");
         item.setTitle("Title");
         item.setPicturecount(0);
         item.setItemtags(tags);
-        itemService.createItem(item);
+        Item repoItem = itemService.createItem(item);
 
         // We create 2 Mock images
         MockMultipartFile image1 = new MockMultipartFile("picture.png", "picture.png",
@@ -131,12 +139,12 @@ public class PictureIntegrationTest {
                 "image/png", "Generate bytes to simusdssdlate a picture".getBytes());
 
         // We upload the two mock images (bypass AWS S3 Upload)
-        pictureStorageService.uploadItemImage(item.getId(),image1);
-        pictureStorageService.uploadItemImage(item.getId(),image2);
+        pictureStorageService.uploadItemImage(repoItem.getId(),image1);
+        pictureStorageService.uploadItemImage(repoItem.getId(),image2);
 
         // We test getAllPictures
         List<Pictures> pictures = new ArrayList<>();
-        pictures = pictureStorageService.getAllPictures(item.getId());
+        pictures = pictureStorageService.getAllPictures(repoItem.getId());
 
         // Tests if the pictures are in the Database
         assert(pictures.get(0).getName().contains("picture"));
