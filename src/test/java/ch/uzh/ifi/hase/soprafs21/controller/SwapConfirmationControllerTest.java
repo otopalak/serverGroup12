@@ -2,13 +2,10 @@ package ch.uzh.ifi.hase.soprafs21.controller;
 
 import ch.uzh.ifi.hase.soprafs21.entity.SwapConfirmation;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.SwapConfirmationPostDTO;
-import ch.uzh.ifi.hase.soprafs21.service.LikeService;
 import ch.uzh.ifi.hase.soprafs21.service.SwapConfirmationService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

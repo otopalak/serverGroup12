@@ -1,11 +1,7 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
-
-import org.mapstruct.Mapping;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /*

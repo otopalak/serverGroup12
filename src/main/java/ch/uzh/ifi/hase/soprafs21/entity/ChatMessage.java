@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
 import ch.uzh.ifi.hase.soprafs21.constant.MessageStatus;
-
 import javax.persistence.*;
 import java.util.Date;
 
