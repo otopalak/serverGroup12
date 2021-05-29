@@ -30,6 +30,7 @@ To start the deployed application on Heroku follow this [link](http://sopra-fs21
 ## dependencies and database
 The PostgreSQL database is only used in the deployed build on Heroku. For testing we have used the H2 in-memory database.
 Once a change is commited to the master-branch on GitHub, the application is automatically redeployed on Heroku. The deployment follows the steps defined in the properties file.
+Furhermore you can locally not upload any pictures. We have used a AWS S3 bucket for our pictures. To make sure the Credentials are not openly available, they are saved as secrets on heroku. The same is done for the persistent database. 
 
 # Roadmap
 * We would like to implement statistics on users and their items. These data would be used to develop a more sophisticated item Proposal, so that the match percentage of a user with a given item ca be increased
