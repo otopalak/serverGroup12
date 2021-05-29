@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.ManyToAny;
 
 /**
  * Internal User Representation
@@ -56,9 +55,8 @@ public class User implements Serializable {
     @Column
     private Integer postcode;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(orphanRemoval = true, mappedBy = "userId")
     private List<Item> items = new ArrayList<>();
-
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

@@ -3,9 +3,7 @@ package ch.uzh.ifi.hase.soprafs21.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-
 
 /*
  *  This is a picture Entity to save pictures in the Database
@@ -53,19 +51,13 @@ public class Item implements Serializable {
     private List<Matches> matches_itemTwo;
 
     @OneToMany(orphanRemoval = true, mappedBy = "itemID1")
-    private List<SwapConfirmation> swaps_itemOne;
-
-    @OneToMany(orphanRemoval = true, mappedBy = "itemID2")
-    private List<SwapConfirmation> swaps_itemTwo;
-
-    @OneToMany(orphanRemoval = true, mappedBy = "itemID1")
     private List<SwapConfirmation> swapConfirmations_itemOne;
 
     @OneToMany(orphanRemoval = true, mappedBy = "itemID2")
     private List<SwapConfirmation> swapConfirmations_itemTwo;
 
     @ElementCollection
-    private List<Long> swapHistory;
+    private List<String> swapHistory;
 
     public Long getId() {
         return id;
@@ -155,21 +147,21 @@ public class Item implements Serializable {
         this.matches_itemTwo = matches_itemTwo;
     }
 
-    public List<SwapConfirmation> getSwaps_itemOne() {
-        return swaps_itemOne;
-    }
-
-    public void setSwaps_itemOne(List<SwapConfirmation> swaps_itemOne) {
-        this.swaps_itemOne = swaps_itemOne;
-    }
-
-    public List<SwapConfirmation> getSwaps_itemTwo() {
-        return swaps_itemTwo;
-    }
-
-    public void setSwaps_itemTwo(List<SwapConfirmation> swaps_itemTwo) {
-        this.swaps_itemTwo = swaps_itemTwo;
-    }
+//    public List<SwapConfirmation> getSwaps_itemOne() {
+//        return swaps_itemOne;
+//    }
+//
+//    public void setSwaps_itemOne(List<SwapConfirmation> swaps_itemOne) {
+//        this.swaps_itemOne = swaps_itemOne;
+//    }
+//
+//    public List<SwapConfirmation> getSwaps_itemTwo() {
+//        return swaps_itemTwo;
+//    }
+//
+//    public void setSwaps_itemTwo(List<SwapConfirmation> swaps_itemTwo) {
+//        this.swaps_itemTwo = swaps_itemTwo;
+//    }
 
     public List<SwapConfirmation> getSwapConfirmations_itemOne() {
         return swapConfirmations_itemOne;
@@ -187,11 +179,11 @@ public class Item implements Serializable {
         this.swapConfirmations_itemTwo = swapConfirmations_itemTwo;
     }
 
-    public List<Long> getSwapHistory() {
+    public List<String> getSwapHistory() {
         return swapHistory;
     }
 
-    public void setSwapHistory(List<Long> swapHistory) {
+    public void setSwapHistory(List<String> swapHistory) {
         this.swapHistory = swapHistory;
     }
 }

@@ -2,9 +2,7 @@ package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
 import ch.uzh.ifi.hase.soprafs21.entity.Tags;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
-import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -59,6 +57,10 @@ public class ItemServiceTest {
         assertEquals(testitem.getDescription(),iteamcreated.getDescription());
         assertEquals(testitem.getTitle(),iteamcreated.getTitle());
         assertEquals(testitem.getItemtags(),iteamcreated.getItemtags());
+    }
+
+    @Test
+    public void likeProposalsTest(){
     }
 
 }

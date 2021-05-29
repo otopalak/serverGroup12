@@ -7,26 +7,13 @@ import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.TagsRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
-import org.junit.platform.commons.function.Try;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.server.ResponseStatusException;
 
-
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ItemServiceIntegrationTest {
 
     @Qualifier("itemRepository")
@@ -60,7 +48,6 @@ public class ItemServiceIntegrationTest {
 
     @BeforeEach
     public void setup() {
-
         //create User
         user = new User();
         user.setId(1L);
@@ -108,12 +95,13 @@ public class ItemServiceIntegrationTest {
 
     // Checks the function getItemById() throws an error
     @Test
-    @Disabled
     public void getItemByWrongId_ThrowsError(){
-        //assertTrue(itemRepository.findAll().isEmpty());
+        itemRepository.deleteAll();
+        assertTrue(itemRepository.findAll().isEmpty());
         // Create Input ID, that does not exist -> 10L
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
         tagsRepository.save(tag);
+        item.setUserId(savedUser.getId());
         itemRepository.save(item);
 
         try{
@@ -286,13 +274,13 @@ public class ItemServiceIntegrationTest {
     // In this test we check, if the item also gets deleted, after having
     // count == 3
     @Test
-    @Disabled
     public void itemGetsDeleted_Count3(){
         //given
-        assertNull(itemRepository.findById(1));
+        assertTrue(itemRepository.findAll().isEmpty());
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
         tagsRepository.save(tag);
+        item.setUserId(savedUser.getId());
 
         // We create an Item with 1 Report
         // Creating the Items
@@ -303,148 +291,7 @@ public class ItemServiceIntegrationTest {
         String message = itemService.updateReportCount(repoItem.getId());
         // We check, that the item is also deleted
         assertEquals(message,"The item had 3 reports and was deleted!");
-        assertEquals(itemRepository.findById(item.getId()), null);
-    }
-    // Get a List of Items based on the Tags, that are in those items
-    @Test
-    @Transactional
-    @Disabled
-    public void getItems_fromTags_empty(){
-        // When
-        assertNull(itemRepository.findById(1));
-        assertNull(itemRepository.findById(2));
-
-        userRepository.save(user);
-
-        // Creating some tags
-        Tags tag1 = new Tags();
-        tag1.setDescription("tag1");
-        tagsRepository.save(tag1);
-        Tags tag2 = new Tags();
-        tag2.setDescription("tag2");
-        tagsRepository.save(tag2);
-        Tags tag3 = new Tags();
-        tag3.setDescription("tag3");
-        tagsRepository.save(tag3);
-
-        // Creating Items
-
-        // Item 1
-        Item item1 = new Item();
-        item1.setUserId(user.getId());
-        item1.setDescription("Test Description1");
-        item1.setTitle("Title");
-        List<Tags> tags1 = new ArrayList<>();
-        tags1.add(tag1);
-        tags1.add(tag2);
-        item1.setItemtags(tags1);
-        itemRepository.save(item1);
-
-        // Item 2
-        Item item2 = new Item();
-        item2.setUserId(user.getId());
-        item2.setDescription("Test Description2");
-        item2.setTitle("Title2");
-        List<Tags> tags2 = new ArrayList<>();
-        tags2.add(tag1);
-        item2.setItemtags(tags2);
-        itemRepository.save(item2);
-
-        // Item 3
-        Item item3 = new Item();
-        item3.setUserId(user.getId());
-        item3.setDescription("Test Description3");
-        item3.setTitle("Title3");
-        List<Tags> tags3 = new ArrayList<>();
-        tags3.add(tag3);
-        item3.setItemtags(tags3);
-        itemRepository.save(item3);
-
-        //List of Tags
-        List<String> tags = new ArrayList<>();
-        tags.add(tag1.getDescription());
-        List<Item> items = itemService.getItemByTagName(tags,user.getId());
-
-        assert(items.size()==0);
+        assertTrue(itemRepository.findById(item.getId()).isEmpty());
     }
 
-    @Test
-    @Transactional
-    @Disabled
-    public void getItems_fromTags(){
-        // When
-        assertNull(itemRepository.findById(1));
-        assertNull(itemRepository.findById(2));
-
-        User user2 = new User();
-        user2.setId(2L);
-        user2.setPassword("password");
-        user2.setName("nico");
-        user2.setUsername("nico");
-        user2.setAddress("address");
-        user2.setPostcode(9050);
-        user2.setCity("Appenzell");
-        user2.setStatus(UserStatus.ONLINE);
-        user2.setToken("hello");
-
-        // Creating some tags
-        Tags tag1 = new Tags();
-        tag1.setDescription("tag1");
-        Tags tag2 = new Tags();
-        tag2.setDescription("tag2");
-        Tags tag3 = new Tags();
-        tag3.setDescription("tag3");
-
-        // Creating Items
-
-        // Item 1
-        Item item1 = new Item();
-        item1.setUserId(user.getId());
-        item1.setDescription("Test Description1");
-        item1.setTitle("Title");
-        List<Tags> tags1 = new ArrayList<>();
-        tags1.add(tag1);
-        tags1.add(tag2);
-        item1.setItemtags(tags1);
-        //itemRepository.save(item1);
-
-        // Item 2
-        Item item2 = new Item();
-        item2.setUserId(user2.getId());
-        item2.setDescription("Test Description2");
-        item2.setTitle("Title2");
-        List<Tags> tags2 = new ArrayList<>();
-        tags2.add(tag1);
-        item2.setItemtags(tags2);
-        //itemRepository.save(item2);
-
-        // Item 3
-        Item item3 = new Item();
-        item3.setUserId(user2.getId());
-        item3.setDescription("Test Description3");
-        item3.setTitle("Title3");
-        List<Tags> tags3 = new ArrayList<>();
-        tags3.add(tag3);
-        item3.setItemtags(tags3);
-        //itemRepository.save(item3);
-
-        userRepository.save(user);
-        userRepository.save(user2);
-
-        tagsRepository.save(tag1);
-        tagsRepository.save(tag2);
-        tagsRepository.save(tag3);
-
-        itemRepository.save(item1);
-        itemRepository.save(item2);
-        itemRepository.save(item3);
-
-        //List of Tags
-        List<String> tags = new ArrayList<>();
-        tags.add(tag1.getDescription());
-        List<Item> items = itemService.getItemByTagName(tags,user.getId());
-
-        assertTrue(items.size() == 1);
-        assertEquals(items.get(0).getId(), item2.getId());
-    }
 }

@@ -36,8 +36,8 @@ public class SwapConfirmationService {
         long itemID1 = swapConfirmation.getItemID1();
         long itemID2 = swapConfirmation.getItemID2();
 
-        SwapConfirmation swapConfirmation1 = swapConfirmationRepository.findByItemID1AndAndItemID2(itemID1, itemID2);
-        SwapConfirmation swapConfirmation2 = swapConfirmationRepository.findByItemID1AndAndItemID2(itemID2, itemID1);
+        SwapConfirmation swapConfirmation1 = swapConfirmationRepository.findByItemID1AndItemID2(itemID1, itemID2);
+        SwapConfirmation swapConfirmation2 = swapConfirmationRepository.findByItemID1AndItemID2(itemID2, itemID1);
 
         if(swapConfirmation1 != null){
             swapConfirmation1.setItem1ConfirmsItem2(true);
@@ -65,39 +65,10 @@ public class SwapConfirmationService {
         return savedSwapConfirmation;
     }
 
-    /*public String confirm(Long itemID1, Long itemID2){
-        // search for a SwapConfirmation
-        SwapConfirmation swapConfirmation1 = swapConfirmationRepository.findByItemID1AndAndItemID2(itemID1, itemID2);
-        SwapConfirmation swapConfirmation2 = swapConfirmationRepository.findByItemID1AndAndItemID2(itemID2, itemID1);
-
-        //Swap confirmation does not exist
-        if (swapConfirmation1 == null && swapConfirmation2 == null){
-            String baseErrorMessage = "SwapConfirmation does not exist!";
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
-        }
-        // check which Swap confirmation is not empty and set the confirmation
-        if (swapConfirmation1 != null){
-            if (swapConfirmation1.getItemID1() == itemID1){
-                swapConfirmation1.setItem1ConfirmsItem2(true);
-            }else{
-                swapConfirmation1.setItem2ConfirmsItem1(true);
-            }
-            changeItemsIfConfirmed(swapConfirmation1);
-        }
-        if (swapConfirmation2 != null){
-            if (swapConfirmation2.getItemID1() == itemID1){
-                swapConfirmation2.setItem1ConfirmsItem2(true);
-            }else
-                swapConfirmation2.setItem2ConfirmsItem1(true);
-            changeItemsIfConfirmed(swapConfirmation2);
-        }
-        return "swap confirmed";
-    }*/
-
     public String cancelSwapConfirmation(long itemID1, long itemID2){
         // search for a SwapConfirmation
-        SwapConfirmation swapConfirmation1 = swapConfirmationRepository.findByItemID1AndAndItemID2(itemID1, itemID2);
-        SwapConfirmation swapConfirmation2 = swapConfirmationRepository.findByItemID1AndAndItemID2(itemID2, itemID1);
+        SwapConfirmation swapConfirmation1 = swapConfirmationRepository.findByItemID1AndItemID2(itemID1, itemID2);
+        SwapConfirmation swapConfirmation2 = swapConfirmationRepository.findByItemID1AndItemID2(itemID2, itemID1);
 
         //Swap confirmation does not exist
         if (swapConfirmation1 == null && swapConfirmation2 == null){
@@ -146,12 +117,16 @@ public class SwapConfirmationService {
 
             //SwapHistory
             Item item1 = itemRepository.findById(itemIDUser1);
-            List<Long> swapHistory1 = item1.getSwapHistory();
-            swapHistory1.add(itemIDUser1);
-
             Item item2 = itemRepository.findById(itemIDUser2);
-            List<Long> swapHistory2 = item2.getSwapHistory();
-            swapHistory2.add(itemIDUser2);
+
+            String itemTitle1 = item1.getTitle();
+            String itemTitle2 = item2.getTitle();
+
+            List<String> swapHistory1 = item1.getSwapHistory();
+            swapHistory1.add(itemTitle1);
+
+            List<String> swapHistory2 = item2.getSwapHistory();
+            swapHistory2.add(itemTitle2);
 
             item1.setSwapHistory(swapHistory2);
             item2.setSwapHistory(swapHistory1);
@@ -179,5 +154,19 @@ public class SwapConfirmationService {
 
             swapConfirmationRepository.deleteAll(swapConfirmationsToDelete);
         }
+    }
+
+    public boolean check(long ownItemID, long matchedItemID) {
+        SwapConfirmation swapConfirmation1 = swapConfirmationRepository.findByItemID1AndItemID2(ownItemID, matchedItemID);
+        SwapConfirmation swapConfirmation2 = swapConfirmationRepository.findByItemID1AndItemID2(matchedItemID, ownItemID);
+
+        if (swapConfirmation1 != null){
+            return swapConfirmation1.getItem1ConfirmsItem2();
+        }
+
+        if (swapConfirmation2 != null){
+            return swapConfirmation2.getItem2ConfirmsItem1();
+        }
+        return false;
     }
 }

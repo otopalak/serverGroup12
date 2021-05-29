@@ -77,7 +77,7 @@ public class PictureStorageService {
      * This function is for uploading an image to the S3 Server and creating an Entity pictures
      * In S3 each item id has 1 Folder with all pictures in it!
      */
-    public void uploadItemImage(long id, MultipartFile file) throws IOException {
+    public String uploadItemImage(long id, MultipartFile file) throws IOException {
         // 1. Check if image is empty
         if (file.isEmpty()) {
             String baseErrorMessage = "You need to upload an image!";
@@ -120,6 +120,7 @@ public class PictureStorageService {
         if(System.getenv("AWS_ACCESS_KEY_ID") != null ){
             fileStore.save(path, filename, Optional.of(metadata), file.getInputStream());
         }
+        return "Upload done!";
     }
 
 }

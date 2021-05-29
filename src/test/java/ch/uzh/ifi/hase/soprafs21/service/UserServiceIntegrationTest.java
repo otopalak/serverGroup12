@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -34,6 +32,111 @@ public class UserServiceIntegrationTest {
     @BeforeEach
     public void setup() {
         userRepository.deleteAll();
+    }
+
+    // Checks, if the the username != null
+    @Test
+    public void update_user_test(){
+        // given
+        User currentUser1 = new User();
+        currentUser1.setName("testName");
+        currentUser1.setUsername("testUsername");
+        currentUser1.setPassword("123");
+        User currentUser = userService.createUser(currentUser1);
+
+        User userInput = new User();
+        userInput.setName("newName");
+        userInput.setPassword("1243");
+
+        assertThrows(ResponseStatusException.class, () -> userService.updateUser(currentUser,userInput));
+    }
+
+    // Checks if the password isn't blank
+    @Test
+    public void update_user_test_2(){
+        // given
+        User currentUser1 = new User();
+        currentUser1.setName("testName");
+        currentUser1.setUsername("testUsername");
+        currentUser1.setPassword("123");
+        User currentUser = userService.createUser(currentUser1);
+
+        User userInput = new User();
+        userInput.setName("newName");
+        userInput.setUsername("Hallo");
+        userInput.setPassword("");
+
+        assertThrows(ResponseStatusException.class, () -> userService.updateUser(currentUser,userInput));
+    }
+
+    @Test
+    public void update_user_test_3(){
+        // given
+        User currentUser1 = new User();
+        currentUser1.setName("testName");
+        currentUser1.setUsername("testUsername");
+        currentUser1.setPassword("123");
+        User currentUser = userService.createUser(currentUser1);
+
+        User userInput = new User();
+        userInput.setName("newName");
+        userInput.setPassword("1233");
+        userInput.setUsername("Hallo");
+        userInput.setAddress("");
+        userInput.setCity("");
+
+        assertThrows(ResponseStatusException.class, () -> userService.updateUser(currentUser,userInput));
+    }
+    @Test
+    public void update_user_test_4(){
+        // given
+        User currentUser1 = new User();
+        currentUser1.setName("hdhdh");
+        currentUser1.setUsername("hdhdh");
+        currentUser1.setPassword("123");
+        User currentUser = userService.createUser(currentUser1);
+
+        User currentUser2 = new User();
+        currentUser2.setName("DennisShushack");
+        currentUser2.setUsername("dennis");
+        currentUser2.setPassword("dennis");
+        userService.createUser(currentUser2);
+
+        User userInput = new User();
+        userInput.setName("newName");
+        userInput.setUsername("dennis");
+        userInput.setPassword("1233");
+        userInput.setAddress("22");
+        userInput.setCity("22");
+
+        assertThrows(ResponseStatusException.class, () -> userService.updateUser(currentUser,userInput));
+    }
+
+    @Test
+    public void update_user_test_5(){
+        // given
+        User currentUser1 = new User();
+        currentUser1.setName("hdhdh");
+        currentUser1.setUsername("hdhdh");
+        currentUser1.setPassword("123");
+        User currentUser = userService.createUser(currentUser1);
+
+
+        User userInput = new User();
+        userInput.setName("newName");
+        userInput.setUsername("dennis");
+        userInput.setPassword("1233");
+        userInput.setAddress("22");
+        userInput.setCity("22");
+
+        User EndUser = userService.updateUser(currentUser,userInput);
+
+        assertEquals(EndUser.getAddress(),userInput.getAddress());
+        assertEquals(EndUser.getCity(),userInput.getCity());
+        assertEquals(EndUser.getUsername(),userInput.getUsername());
+        assertEquals(EndUser.getPassword(),userInput.getPassword());
+
+
     }
 
     @Test

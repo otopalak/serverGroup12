@@ -1,32 +1,16 @@
 package ch.uzh.ifi.hase.soprafs21.controller;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Item;
-import ch.uzh.ifi.hase.soprafs21.entity.Matches;
 import ch.uzh.ifi.hase.soprafs21.entity.Tags;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs21.service.TagsService;
-import ch.uzh.ifi.hase.soprafs21.service.UserService;
-import com.amazonaws.services.s3.AmazonS3;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ch.uzh.ifi.hase.soprafs21.service.ItemService;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import javax.print.attribute.standard.Media;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 public class ItemController {
@@ -195,36 +179,18 @@ public class ItemController {
         return delete;
     }
 
-
-    // Get all items by chosen Tags
-    @GetMapping("users/{userId}/items/tags")
-    @ResponseStatus(HttpStatus.OK)
-    public List<ItemGetDTO> getItemsByTags(@PathVariable("userId") long userId,@RequestBody TagsGetDTO tagsGetDTO){
-        List<Item> items = new ArrayList<>();
-        List<String> tags = tagsGetDTO.getTags();
-        items = itemService.getItemByTagName(tags,userId);
-        // Returning a list of ItemGetDTO's
-        List <ItemGetDTO> itemGetDTOS = new ArrayList<>();
-        // Internal representation to API representation
-        for(Item item: items){
-            // Adding the tags to the itemGetDTO's
-            List<String> tagsToConvert = new ArrayList<>();
-            List<Tags> tagsTags = item.getItemtags();
-            ItemGetDTO itemGetDTO = DTOMapper.INSTANCE.convertEntityToItemGetDTO(item);
-            for(Tags tagtoAdd: tagsTags){
-                tagsToConvert.add(tagtoAdd.getDescription());
-            }
-            itemGetDTO.setTagsItem(tagsToConvert);
-            itemGetDTOS.add(itemGetDTO);
-        }
-        return itemGetDTOS;
+    // To remove only here for testing
+    // creates a match between idOne and idTwo
+    @GetMapping("/item/{idOne}/{idTwo}")
+    public void findChatMessages (@PathVariable Long idOne,
+                                  @PathVariable Long idTwo) {
+        itemService.createMatch(idOne, idTwo);
     }
+
     //this return a list containing all itemId's for which the item has been swapped
-    // if my current item1(id=1) swaps with item2(id=2), --> item2 is now mine       GET(.../2) returns [1]
-    // then my retrieved item2 swaps again with item3(id=3), -->item3 is now mine    GET(.../3) returns [1,2], GET(.../3) returns [2]
     @GetMapping("/item/swapHistory/{itemId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Long> getSwapHistory(@PathVariable("itemId") long itemId){
+    public List<String> getSwapHistory(@PathVariable("itemId") long itemId){
         return itemService.getItemById(itemId).getSwapHistory();
     }
 }
