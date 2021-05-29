@@ -46,7 +46,7 @@ Furhermore you can locally not upload any pictures. We have used a AWS S3 bucket
 * Dennis Shushack
 * Mauro Dörig
     
-We would like to extend our thanks to anyone who has supported us through this challenging but experience-filled project. Also, we'd like to especially mention our TA Remi whose advice and guidance was very valuable to us.
+We would like to extend our thanks to anyone who has supported us through this challenging but experience-filled project. Also, we'd like to especially mention our TA  Remy Egloff whose advice and guidance was very valuable to us.
 
 # License
 Copyright (c) 2021 Finder.
