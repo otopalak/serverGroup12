@@ -178,15 +178,7 @@ public class ItemController {
         String delete = itemService.deleteItem(id);
         return delete;
     }
-
-    // To remove only here for testing
-    // creates a match between idOne and idTwo
-    @GetMapping("/item/{idOne}/{idTwo}")
-    public void findChatMessages (@PathVariable Long idOne,
-                                  @PathVariable Long idTwo) {
-        itemService.createMatch(idOne, idTwo);
-    }
-
+    
     //this return a list containing all itemId's for which the item has been swapped
     @GetMapping("/item/swapHistory/{itemId}")
     @ResponseStatus(HttpStatus.OK)
