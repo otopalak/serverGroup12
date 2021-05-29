@@ -22,7 +22,8 @@ We have structured all our classes in controller, service and repository classes
 
 # Launch & Deployment
 ## start the application
-To start the server locally, just run the [server](https://github.com/sopra-fs21-group-12/serverGroup12) and the [client](https://github.com/sopra-fs21-group-12/clientGroup12) the server is reachable under http://localhost:8080/.
+To start the server locally, just run the [server](https://github.com/sopra-fs21-group-12/serverGroup12) and the [client](https://github.com/sopra-fs21-group-12/clientGroup12).
+The server is then reachable under http://localhost:8080/.
 
 To start the deployed application on Heroku follow this [link](http://sopra-fs21-group-12-client.herokuapp.com/)
 
