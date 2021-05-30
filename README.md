@@ -27,6 +27,8 @@ The server is then reachable under http://localhost:8080/.
 
 To start the deployed application on Heroku follow this [link](http://sopra-fs21-group-12-client.herokuapp.com/)
 
+A good tutorial on Spring Boot can be found here: [Playlist](https://www.youtube.com/watch?v=msXL2oDexqw&list=PLqq-6Pq4lTTbx8p2oCgcAQGQyqN8XeA1x)
+
 ## dependencies and database
 The PostgreSQL database is only used in the deployed build on Heroku. For testing we have used the H2 in-memory database.
 Once a change is commited to the master-branch on GitHub, the application is automatically redeployed on Heroku. The deployment follows the steps defined in the properties file.
