@@ -7,8 +7,6 @@ import java.io.Serializable;
 @Table(name = "SwapConfirmation")
 public class SwapConfirmation implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue
     private Long swapConfID;
@@ -20,14 +18,10 @@ public class SwapConfirmation implements Serializable {
     private Long itemID2;
 
     @Column(nullable = false)
-    private Boolean swapConfirmed1;
+    private Boolean item1ConfirmsItem2 = false;
 
     @Column(nullable = false)
-    private Boolean swapConfirmed2;
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
+    private Boolean item2ConfirmsItem1 = false;
 
     public Long getSwapConfID() {
         return swapConfID;
@@ -53,19 +47,19 @@ public class SwapConfirmation implements Serializable {
         this.itemID2 = itemID2;
     }
 
-    public Boolean getSwapConfirmed1() {
-        return swapConfirmed1;
+    public Boolean getItem1ConfirmsItem2() {
+        return item1ConfirmsItem2;
     }
 
-    public void setSwapConfirmed1(Boolean swapConfirmed1) {
-        this.swapConfirmed1 = swapConfirmed1;
+    public void setItem1ConfirmsItem2(Boolean swapConfirmed1) {
+        this.item1ConfirmsItem2 = swapConfirmed1;
     }
 
-    public Boolean getSwapConfirmed2() {
-        return swapConfirmed2;
+    public Boolean getItem2ConfirmsItem1() {
+        return item2ConfirmsItem1;
     }
 
-    public void setSwapConfirmed2(Boolean swapConfirmed2) {
-        this.swapConfirmed2 = swapConfirmed2;
+    public void setItem2ConfirmsItem1(Boolean swapConfirmed2) {
+        this.item2ConfirmsItem1 = swapConfirmed2;
     }
 }

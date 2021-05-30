@@ -5,6 +5,8 @@ import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -51,6 +53,8 @@ public class User implements Serializable {
     private Double latitude;
 
 
+    @OneToMany(orphanRemoval = true, mappedBy = "userId")
+    private List<Item> items = new ArrayList<>();
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -126,5 +130,13 @@ public class User implements Serializable {
 
     public void setStatus(UserStatus status) {
         this.status = status;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

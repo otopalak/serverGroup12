@@ -1,10 +1,7 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
-
-import org.mapstruct.Mapping;
-
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 /*
@@ -13,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name="tags")
-public class Tags {
+public class Tags implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
@@ -21,9 +18,8 @@ public class Tags {
     @Column(nullable = false)
     private String description;
 
-
     @ManyToMany(mappedBy = "itemtags")
-    private List<Item> items = new ArrayList<>();
+    private List<Item> items;
 
     public Long getId() {
         return id;
@@ -39,5 +35,13 @@ public class Tags {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

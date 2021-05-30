@@ -22,7 +22,6 @@ public class Like implements Serializable {
     @Column(nullable = false)
     private Boolean liked;
 
-
     public Long getLikeID() {
         return likeID;
     }

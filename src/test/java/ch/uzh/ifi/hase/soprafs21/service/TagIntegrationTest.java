@@ -1,22 +1,21 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
 import ch.uzh.ifi.hase.soprafs21.entity.Tags;
-import ch.uzh.ifi.hase.soprafs21.repository.ItemRepository;
 import ch.uzh.ifi.hase.soprafs21.repository.TagsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@WebAppConfiguration
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TagIntegrationTest {
 
     @Qualifier("tagsRepository")
@@ -28,6 +27,7 @@ public class TagIntegrationTest {
 
     @BeforeEach
     public void setup(){
+
         tagsRepository.deleteAll();
     }
 

@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs21.controller;
 
-import ch.uzh.ifi.hase.soprafs21.constant.Game;
 import ch.uzh.ifi.hase.soprafs21.entity.ChatMessage;
 import ch.uzh.ifi.hase.soprafs21.constant.ChatNotification;
 import ch.uzh.ifi.hase.soprafs21.service.ChatMessageService;
@@ -29,12 +28,6 @@ public class ChatController {
                         saved.getId(),
                         saved.getSenderId(),
                         saved.getSenderName()));
-    }
-
-    @GetMapping("/messages/{matchId}/count")
-    public ResponseEntity<Long> countNewMessages(@PathVariable Long matchId) {
-        return ResponseEntity
-                .ok(chatMessageService.countNewMessages(matchId));
     }
 
     @GetMapping("/messages/{matchId}")

@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
 @Repository("itemRepository")
 public interface ItemRepository extends JpaRepository<Item, Long> {
     Item findById(long id);
+    //Item getById(long id);
     List<Item> findItemsByUserId(long userId);
 }
 

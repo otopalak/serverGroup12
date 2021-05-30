@@ -1,23 +1,22 @@
 package ch.uzh.ifi.hase.soprafs21.entity;
 
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-
+import javax.persistence.*;
+import java.io.Serializable;
 /*
  *  This is a picture Entity to save pictures in the Database
  */
 
 @Entity
 @Table(name="matches")
-public class Matches {
+public class Matches implements Serializable{
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(nullable = false)
     private Long itemIdOne;
+
+    @Column(nullable = false)
     private Long itemIdTwo;
 
     public Long getId() {
