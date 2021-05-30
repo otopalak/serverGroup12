@@ -329,6 +329,32 @@ public class ItemControllerTest {
                 .andExpect(status().isOk());
 
     }
+    @Test
+    public void givenItemId_and_SearchTag_GivesItem() throws Exception{
+        // We first create Tags and give them to our Item
+        Tags tag1 = new Tags();
+        tag1.setDescription("search");
+        List<Tags> tags = new ArrayList<>();
+        tags.add(tag1);
+
+        // We then create our item
+        Item item = new Item();
+        item.setId(1L);
+        item.setUserId(1L);
+        item.setDescription("Description");
+        item.setTitle("Title");
+        item.setItemtags(tags);
+
+        List<Item> items = new ArrayList<>();
+        items.add(item);
+
+        Mockito.when(itemService.likeProposals(item.getId(),"search")).thenReturn(items);
+
+        MockHttpServletRequestBuilder getRequest = get("/items/1/proposal/search").contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(getRequest).andExpect(status().isOk());
+
+    }
 
     /*
      * Tests the increase in Reports in the POST Mapping to "/items/{itemId}/report"
@@ -400,6 +426,33 @@ public class ItemControllerTest {
 
         mockMvc.perform(getRequest).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    public void test_proposal_function() throws Exception{
+        // Given
+        // We first create Tags and give them to our Item
+        Tags tag1 = new Tags();
+        tag1.setDescription("search");
+        List<Tags> tags = new ArrayList<>();
+        tags.add(tag1);
+
+        // We create an Item with Description, Title and The tags
+        Item item1 = new Item();
+        item1.setId(1L);
+        item1.setUserId(1L);
+        item1.setTitle("Title1");
+        item1.setDescription("Test Description1");
+        item1.setItemtags(tags);
+
+        List<Item> items = new ArrayList<>();
+        Mockito.when(itemService.likeProposals(item1.getId(),"")).thenReturn(items);
+
+        MockHttpServletRequestBuilder getRequest = get("/items/1/proposal").contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(getRequest).andExpect(status().isOk());
+
+
     }
 
 

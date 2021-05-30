@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -85,6 +86,25 @@ class MatchControllerTest {
                 .andExpect(jsonPath("$[0].id", is(match.getId().intValue())))
                 .andExpect(jsonPath("$[0].itemIdOne", is(match.getItemIdOne().intValue())))
                 .andExpect(jsonPath("$[0].itemIdTwo", is(match.getItemIdTwo().intValue())));
+
+    }
+
+    @Test
+    void unmatch_Test() throws Exception{
+        List<Matches> matchesRepo = new ArrayList<>();
+
+        Matches match = new Matches();
+        match.setId(1L);
+        match.setItemIdOne(1L);
+        match.setItemIdTwo(2L);
+
+        matchesRepo.add(match);
+
+        given(matchService.deleteMatch((match.getId()))).willReturn("unmatch Successfull");
+
+        MockHttpServletRequestBuilder putmapping = put("/1/unmatch").contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(putmapping).andExpect(status().isOk());
 
     }
 
