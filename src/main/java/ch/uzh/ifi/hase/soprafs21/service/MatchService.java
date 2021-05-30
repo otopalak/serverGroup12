@@ -80,7 +80,7 @@ public class MatchService {
 
             //delete Match
             matchRepository.deleteById(matchID);
-            return "unmatch Successfull";
+            return "unmatch successfull";
         }
     }
 

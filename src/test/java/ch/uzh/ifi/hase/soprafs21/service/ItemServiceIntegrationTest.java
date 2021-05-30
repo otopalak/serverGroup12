@@ -124,12 +124,6 @@ public class ItemServiceIntegrationTest {
         itemRepository.save(item);
 
         assertEquals(itemRepository.findById(item.getId()).get().getId(), item.getId());
-
-//        Item itemToCompare = itemService.getItemById(item.getId());
-//
-//        assertEquals(item.getId(),itemToCompare.getId());
-//        assertEquals(item.getTitle(),itemToCompare.getTitle());
-//        assertEquals(item.getDescription(),itemToCompare.getDescription());
     }
     // Testing the deletion of an Item, that throws an error
     @Test

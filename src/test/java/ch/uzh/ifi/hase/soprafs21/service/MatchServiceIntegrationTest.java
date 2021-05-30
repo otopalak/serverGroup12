@@ -3,22 +3,22 @@ package ch.uzh.ifi.hase.soprafs21.service;
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.*;
 import ch.uzh.ifi.hase.soprafs21.repository.*;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class SwapConfirmationServiceIntegrationTest {
+class MatchServiceIntegrationTest {
 
     @Qualifier("itemRepository")
     @Autowired
@@ -45,7 +45,7 @@ class SwapConfirmationServiceIntegrationTest {
     private SwapConfirmationRepository swapConfirmationRepository;
 
     @Autowired
-    private SwapConfirmationService swapConfirmationService;
+    private MatchService matchService;
 
     private User user1;
     private User user2;
@@ -63,8 +63,6 @@ class SwapConfirmationServiceIntegrationTest {
     private Item savedItem2;
     private Like savedLike1;
     private Like savedLike2;
-    private Matches savedMatch;
-
 
     @BeforeEach
     void setUp() {
@@ -73,6 +71,7 @@ class SwapConfirmationServiceIntegrationTest {
         user1.setPassword("password");
         user1.setName("mauro");
         user1.setUsername("username");
+
         user1.setStatus(UserStatus.ONLINE);
         user1.setToken("token");
 
@@ -81,6 +80,7 @@ class SwapConfirmationServiceIntegrationTest {
         user2.setPassword("password2");
         user2.setName("nico");
         user2.setUsername("username2");
+
         user2.setStatus(UserStatus.ONLINE);
         user2.setToken("token2");
 
@@ -131,45 +131,37 @@ class SwapConfirmationServiceIntegrationTest {
         //save in db
         savedLike1 = likeRepository.save(like1);
         savedLike2 = likeRepository.save(like2);
-
-        //create Match
-        match = new Matches();
-        match.setItemIdOne(savedItem1.getId());
-        match.setItemIdTwo(savedItem2.getId());
-
-        //save in db
-        savedMatch = matchRepository.save(match);
     }
 
     @Test
-    void bigAssIntegrationTest_SwapConfirmationService_changeItemsIfConfirmed() {
-        //create SwapConfirmation
-        SwapConfirmation swapConfirmation = new SwapConfirmation();
-        swapConfirmation.setItemID1(item1.getId());
-        swapConfirmation.setItemID2(item2.getId());
-        swapConfirmation.setItem1ConfirmsItem2(true);
-        swapConfirmation.setItem2ConfirmsItem1(true);
-
-        swapConfirmationRepository.save(swapConfirmation);
+    void createAndDeleteMatch_integrationTest() {
+        long itemID1 = savedItem1.getId();
+        long itemID2 = savedItem2.getId();
 
         //check that repo is filled
         assertEquals(userRepository.findAll().size(), 2);
         assertEquals(itemRepository.findAll().size(), 2);
         assertEquals(likeRepository.findAll().size(), 2);
+        assertEquals(matchRepository.findAll().size(), 0);
+
+        long matchIDNotExisting = itemID1;
+        assertThrows(ResponseStatusException.class, () -> matchService.deleteMatch(itemID1));
+
+        //create Match
+        Matches createdMatch = matchService.createMatch(itemID1, itemID2);
+
         assertEquals(matchRepository.findAll().size(), 1);
-        assertEquals(swapConfirmationRepository.findAll().size(), 1);
+        assertEquals(createdMatch.getItemIdOne(), itemID1);
+        assertEquals(createdMatch.getItemIdTwo(), itemID2);
 
-        swapConfirmationService.changeItemsIfConfirmed(swapConfirmation);
+        //delete Match
+        long matchID = createdMatch.getId();
+        String message = matchService.deleteMatch(matchID);
+        assertEquals("unmatch successfull", message);
 
-        //now user1 and user2 have changed their Items
-        assertEquals(itemRepository.findById(savedItem1.getId()).get().getUserId(), savedUser2.getId());
-        assertEquals(itemRepository.findById(savedItem2.getId()).get().getUserId(), savedUser1.getId());
-
-        //check that the DB is cleared correctly
         assertEquals(userRepository.findAll().size(), 2);
         assertEquals(itemRepository.findAll().size(), 2);
         assertEquals(likeRepository.findAll().size(), 0);
         assertEquals(matchRepository.findAll().size(), 0);
-        assertEquals(swapConfirmationRepository.findAll().size(), 0);
     }
 }
