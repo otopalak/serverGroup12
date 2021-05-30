@@ -114,29 +114,29 @@ public class UserServiceIntegrationTest {
     }
 
     @Test
-    @Disabled
     public void update_user_test_5(){
         // given
         User currentUser1 = new User();
         currentUser1.setName("hdhdh");
         currentUser1.setUsername("hdhdh");
         currentUser1.setPassword("123");
+        currentUser1.setLongitude(22.33);
+        currentUser1.setLongitude(24.22);
         User currentUser = userService.createUser(currentUser1);
-
 
         User userInput = new User();
         userInput.setName("newName");
         userInput.setUsername("dennis");
         userInput.setPassword("1233");
-
-
+        userInput.setLongitude(13.2);
+        userInput.setLatitude(34.2);
 
         User EndUser = userService.updateUser(currentUser,userInput);
 
-
-
         assertEquals(EndUser.getUsername(),userInput.getUsername());
         assertEquals(EndUser.getPassword(),userInput.getPassword());
+        assertEquals(EndUser.getLongitude(),userInput.getLongitude());
+        assertEquals(EndUser.getLatitude(),userInput.getLatitude());
 
 
     }
