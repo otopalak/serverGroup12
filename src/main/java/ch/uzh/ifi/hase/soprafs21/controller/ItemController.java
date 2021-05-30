@@ -178,7 +178,7 @@ public class ItemController {
         String delete = itemService.deleteItem(id);
         return delete;
     }
-    
+
     //this return a list containing all itemId's for which the item has been swapped
     @GetMapping("/item/swapHistory/{itemId}")
     @ResponseStatus(HttpStatus.OK)

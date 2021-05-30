@@ -1,7 +1,5 @@
 package ch.uzh.ifi.hase.soprafs21.service;
 
-
-import ch.uzh.ifi.hase.soprafs21.constant.MessageStatus;
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.*;
 import ch.uzh.ifi.hase.soprafs21.repository.*;
@@ -127,7 +125,6 @@ public class ChatMessageServiceIntegrationTest {
 
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setContent("Hello this is a chatmessage");
-        chatMessage.setStatus(MessageStatus.RECEIVED);
         chatMessage.setMatchId(matches.getId());
         chatMessage.setRecipientId(matches.getItemIdOne());
         chatMessage.setSenderId(matches.getItemIdTwo());
@@ -139,7 +136,7 @@ public class ChatMessageServiceIntegrationTest {
         assertEquals(chatMessage1.getMatchId(),chatMessage.getMatchId());
 
     }
-    @Test
+    /*@Test
     public void check_countNewMessages(){
         User savedUser = userRepository.save(user);
         User savedUser2 = userRepository.save(user2);
@@ -158,7 +155,6 @@ public class ChatMessageServiceIntegrationTest {
 
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setContent("Hello this is a chatmessage");
-        chatMessage.setStatus(MessageStatus.RECEIVED);
         chatMessage.setMatchId(matches.getId());
         chatMessage.setRecipientId(matches.getItemIdOne());
         chatMessage.setRecipientName("dennis");
@@ -170,7 +166,7 @@ public class ChatMessageServiceIntegrationTest {
 
         assert(amount==1);
 
-    }
+    }*/
     @Test
     public void check_findchatmessages(){
         User savedUser = userRepository.save(user);
@@ -190,7 +186,7 @@ public class ChatMessageServiceIntegrationTest {
 
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setContent("Hello this is a chatmessage");
-        chatMessage.setStatus(MessageStatus.RECEIVED);
+
         chatMessage.setMatchId(matches.getId());
         chatMessage.setRecipientId(matches.getItemIdOne());
         chatMessage.setRecipientName("dennis");
@@ -223,7 +219,7 @@ public class ChatMessageServiceIntegrationTest {
 
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setContent("Hello this is a chatmessage");
-        chatMessage.setStatus(MessageStatus.RECEIVED);
+        //chatMessage.setStatus(MessageStatus.RECEIVED);
         chatMessage.setMatchId(matches.getId());
         chatMessage.setRecipientId(matches.getItemIdOne());
         chatMessage.setRecipientName("dennis");
@@ -256,7 +252,7 @@ public class ChatMessageServiceIntegrationTest {
 
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setContent("Hello this is a chatmessage");
-        chatMessage.setStatus(MessageStatus.RECEIVED);
+        //chatMessage.setStatus(MessageStatus.RECEIVED);
         chatMessage.setMatchId(matches.getId());
         chatMessage.setRecipientId(matches.getItemIdOne());
         chatMessage.setRecipientName("dennis");
@@ -265,7 +261,7 @@ public class ChatMessageServiceIntegrationTest {
         ChatMessage chatMessage1 = chatMessageService.save(chatMessage);
         ChatMessage chatMessage2 = chatMessageService.findById(chatMessage1.getId());
 
-        assertEquals(chatMessage2.getStatus(),MessageStatus.DELIVERED);
+        assertEquals(chatMessage2.getId(), chatMessage1.getId());
 
 
 
