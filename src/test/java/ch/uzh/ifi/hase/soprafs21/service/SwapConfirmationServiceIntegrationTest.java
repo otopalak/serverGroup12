@@ -79,9 +79,9 @@ class SwapConfirmationServiceIntegrationTest {
         user1.setPassword("password");
         user1.setName("mauro");
         user1.setUsername("username");
-        user1.setAddress("address");
-        user1.setPostcode(9050);
-        user1.setCity("Appenzell");
+
+
+
         user1.setStatus(UserStatus.ONLINE);
         user1.setToken("token");
 
@@ -90,9 +90,9 @@ class SwapConfirmationServiceIntegrationTest {
         user2.setPassword("password2");
         user2.setName("nico");
         user2.setUsername("username2");
-        user2.setAddress("address2");
-        user2.setPostcode(3000);
-        user2.setCity("Zuerich");
+
+
+
         user2.setStatus(UserStatus.ONLINE);
         user2.setToken("token2");
 

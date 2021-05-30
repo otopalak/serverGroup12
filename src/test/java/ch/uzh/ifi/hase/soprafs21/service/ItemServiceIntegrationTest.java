@@ -54,9 +54,9 @@ public class ItemServiceIntegrationTest {
         user.setPassword("password");
         user.setName("mauro");
         user.setUsername("username");
-        user.setAddress("address");
-        user.setPostcode(9050);
-        user.setCity("Appenzell");
+
+
+
         user.setStatus(UserStatus.ONLINE);
         user.setToken("token");
 

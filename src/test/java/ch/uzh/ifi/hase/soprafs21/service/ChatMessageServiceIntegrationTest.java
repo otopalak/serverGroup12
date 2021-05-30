@@ -64,9 +64,6 @@ public class ChatMessageServiceIntegrationTest {
         user.setPassword("password");
         user.setName("mauro");
         user.setUsername("username");
-        user.setAddress("address");
-        user.setPostcode(9050);
-        user.setCity("Appenzell");
         user.setStatus(UserStatus.ONLINE);
         user.setToken("tokessn");
 
@@ -75,9 +72,9 @@ public class ChatMessageServiceIntegrationTest {
         user2.setPassword("password");
         user2.setName("dennis");
         user2.setUsername("dennis");
-        user2.setAddress("address");
-        user2.setPostcode(9050);
-        user2.setCity("Appenzell");
+
+
+
         user2.setStatus(UserStatus.ONLINE);
         user2.setToken("toksssssen");
 
