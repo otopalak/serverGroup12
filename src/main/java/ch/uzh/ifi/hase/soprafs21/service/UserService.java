@@ -107,8 +107,8 @@ public class UserService {
             String baseErrorMessage = "You cannot choose an empty Password!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
-        if(userInput.getAddress().isBlank() || userInput.getCity().isBlank()){
-            String baseErrorMessage = "You cannot have an empty address or City!";
+        if(userInput.getLongitude()==null || userInput.getLatitude()==null){ // TODO: make changes such that longitude and latitude are getting checked properly
+            String baseErrorMessage = "Your address is not valid!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
         // We check first, if the userInputs username is empty
@@ -116,22 +116,26 @@ public class UserService {
             // If it isn't empty, we need to check, if there is already a user with this username
             // We need to also check, that the User didn't just set the same Username as he already had
             User databaseUser = userRepository.findByUsername(userInput.getUsername());
-            if(databaseUser != null && currentUser.getUsername()!=databaseUser.getUsername()){
+            if(databaseUser != null && !currentUser.getUsername().equals(databaseUser.getUsername())){
                 String baseErrorMessage = "You cannot choose this Username. It has already been taken!";
                 throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
             }else{
                 currentUser.setUsername(userInput.getUsername());
             }
             currentUser.setPassword(userInput.getPassword());
-            currentUser.setAddress(userInput.getAddress());
-            currentUser.setCity(userInput.getCity());
-            currentUser.setPostcode(userInput.getPostcode());
-            currentUser.setPassword(userInput.getPassword());
-            userRepository.save(currentUser);
-            userRepository.flush();
-            return currentUser;
+            currentUser.setLongitude(userInput.getLongitude());
+            currentUser.setLatitude(userInput.getLatitude());
 
         }
+
+        // Setting a new Password
+        if(userInput.getPassword().isBlank()){
+            String baseErrorMessage = "You cannot have an empty password!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }else{ currentUser.setPassword(userInput.getPassword());
+        }
+        userRepository.save(currentUser);
+        userRepository.flush();
         return currentUser;
     }
 

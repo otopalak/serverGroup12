@@ -8,34 +8,22 @@ public class UserPostDTO {
 
     private String password;
 
-    private String address;
+    private Double longitude;
 
-    private String city;
+    private Double latitude;
 
-    private Integer postcode;
+    public Double getLongitude() { return longitude; }
 
-    public String getAddress() {
-        return address;
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public Integer getPostcode() {
-        return postcode;
-    }
-
-    public void setPostcode(Integer postcode) {
-        this.postcode = postcode;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     public String getName() {

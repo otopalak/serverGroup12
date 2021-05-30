@@ -21,9 +21,8 @@ public interface DTOMapper {
     @Mapping(source = "name", target = "name")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "password", target = "password")
-    @Mapping(source = "address",target = "address")
-    @Mapping(source = "city",target = "city")
-    @Mapping(source = "postcode",target = "postcode")
+    @Mapping(source = "longitude",target = "longitude")
+    @Mapping(source = "latitude",target = "latitude")
     User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
     @Mapping(source = "title", target = "title")
@@ -46,9 +45,8 @@ public interface DTOMapper {
     @Mapping(source = "username", target = "username")
     @Mapping(source = "status", target = "status")
     @Mapping(source = "token",target = "token")
-    @Mapping(source = "address",target = "address")
-    @Mapping(source = "city",target = "city")
-    @Mapping(source = "postcode",target = "postcode")
+    @Mapping(source = "longitude",target = "longitude")
+    @Mapping(source = "latitude",target = "latitude")
     UserGetDTO convertEntityToUserGetDTO(User user);
 
     @Mapping(source = "id", target = "id")
@@ -59,9 +57,8 @@ public interface DTOMapper {
     @Mapping(source = "id",target = "id")
     @Mapping(source = "username",target = "username")
     @Mapping(source = "password",target = "password")
-    @Mapping(source = "address",target = "address")
-    @Mapping(source = "postcode",target = "postcode")
-    @Mapping(source = "city",target = "city")
+    @Mapping(source = "longitude",target = "longitude")
+    @Mapping(source = "latitude",target = "latitude")
     User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 
 

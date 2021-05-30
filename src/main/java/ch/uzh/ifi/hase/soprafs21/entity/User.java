@@ -47,13 +47,11 @@ public class User implements Serializable {
     private Timestamp timestamp;
 
     @Column
-    private String address;
+    private Double longitude;
 
     @Column
-    private String city;
+    private Double latitude;
 
-    @Column
-    private Integer postcode;
 
     @OneToMany(orphanRemoval = true, mappedBy = "userId")
     private List<Item> items = new ArrayList<>();
@@ -62,28 +60,20 @@ public class User implements Serializable {
         return serialVersionUID;
     }
 
-    public String getAddress() {
-        return address;
+    public Double getLongitude() {
+        return longitude;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
-    public String getCity() {
-        return city;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public Integer getPostcode() {
-        return postcode;
-    }
-
-    public void setPostcode(Integer postcode) {
-        this.postcode = postcode;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     public Timestamp getTimestamp() {
