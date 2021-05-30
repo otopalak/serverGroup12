@@ -1,9 +1,9 @@
 # SoPra RESTful Service Template FS21
 
 # Introduction
-blablalbalba
+Swap your belongings for something better!
 
-
+The goal of this project was to create a trading plattform, however with a twist. Instead of having a boring and dull looking interface, the user is animated to swipe on other items, that he is interested in. In our application the user is able to upload multiple pictures, add a description, a title and is even able to set the location for his items, that he wants to trade with. Based on tags, that he chooses the user can then filter his suggestions for trading. The swiping is ingenious, letting him do this in a Tinder like fashion. If a match is created (two people liked eachothers items/want to trade them), the two users are then able to chat with eachother and negotiate the further trade.
 
 # Technologies
 ## Programming language and environment
